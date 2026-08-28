@@ -863,9 +863,9 @@ h3 {
 
 .split {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.56fr);
+  grid-template-columns: minmax(0, 0.52fr) minmax(340px, 1fr);
   gap: clamp(26px, 5vw, 72px);
-  align-items: center;
+  align-items: start;
   background:
     linear-gradient(110deg, rgba(31, 78, 163, 0.06), rgba(24, 151, 124, 0.07)),
     white;

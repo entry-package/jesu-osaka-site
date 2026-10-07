@@ -169,22 +169,23 @@
             <p class="eyebrow">Contact Form</p>
             <h2>お問い合わせフォーム</h2>
             <p class="form-lead">下記に入力して「送信する」を押してください。担当が確認し、順次ご返信します。（<span style="color:var(--red);font-weight:800;">*</span> は必須項目）</p>
-            <form class="native-form" action="https://script.google.com/macros/s/AKfycbzG_WbEgV6ihywAw5JXol_EaWK9qaqVOaus-to4PSnBfRuxeHs3QhpPR9fI07xUTxTERg/exec" method="post" target="contact-submit-frame" onsubmit="window.contactFormSubmitted = true">
+            <form class="native-form" action="https://script.google.com/macros/s/AKfycbzG_WbEgV6ihywAw5JXol_EaWK9qaqVOaus-to4PSnBfRuxeHs3QhpPR9fI07xUTxTERg/exec" method="post" target="contact-submit-frame">
               <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
               <input type="hidden" name="ts" id="form-open-ts" value="" />
+              <input type="hidden" name="requestId" id="form-request-id" value="" />
               <noscript><p class="form-lead" style="color:var(--red);font-weight:800;">送信にはブラウザのJavaScriptを有効にしていただく必要があります。無効のままでは迷惑送信と区別できず、お問い合わせが届きません。</p></noscript>
 
               <label>お名前 <span class="req">*</span>
-                <input type="text" name="name" autocomplete="name" required />
+                <input type="text" name="name" autocomplete="name" maxlength="100" required />
               </label>
               <label>ご所属（会社・学校・団体名）
-                <input type="text" name="organization" autocomplete="organization" />
+                <input type="text" name="organization" autocomplete="organization" maxlength="200" />
               </label>
               <label>メールアドレス <span class="req">*</span>
-                <input type="email" name="email" autocomplete="email" required />
+                <input type="email" name="email" autocomplete="email" maxlength="254" required />
               </label>
               <label>電話番号
-                <input type="tel" name="phone" autocomplete="tel" />
+                <input type="tel" name="phone" autocomplete="tel" maxlength="40" />
               </label>
               <label>お問い合わせの種類 <span class="req">*</span>
                 <select name="category" required>
@@ -198,14 +199,14 @@
                 </select>
               </label>
               <label>お問い合わせ内容 <span class="req">*</span>
-                <textarea name="message" required></textarea>
+                <textarea name="message" maxlength="4000" required></textarea>
               </label>
               <div class="form-submit">
                 <button type="submit" class="button primary">送信する</button>
               </div>
             </form>
-            <p class="form-lead" id="contact-form-message" hidden>お問い合わせを受け付けました。確認後にご連絡します。</p>
-            <iframe name="contact-submit-frame" title="お問い合わせ送信結果" style="display: none" onload="if (window.contactFormSubmitted) window.location.href = './contact-thanks.html'"></iframe>
+            <p class="form-lead" id="contact-form-message" role="status" aria-live="polite" hidden></p>
+            <iframe name="contact-submit-frame" title="お問い合わせ送信結果" style="display: none"></iframe>
           </div>
 
           <aside class="contact-routes" aria-label="その他の窓口">
@@ -238,6 +239,6 @@
         <p>© 一般社団法人大阪府eスポーツ連合. All rights reserved.</p>
       </div>
     </footer>
-    <script>(function () { var el = document.getElementById("form-open-ts"); if (el) el.value = String(Date.now()); })();</script>
+    <script src="./contact-submit.js" defer></script>
   </body>
 </html>

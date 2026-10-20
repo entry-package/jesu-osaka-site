@@ -23,7 +23,9 @@ def validate(data,policy):
    if evidence.scheme!="https" or not (host=="package-inc.com" or host.endswith(".package-inc.com")):errors.append("missing PACkage official relationship evidence")
    if e.get("importance",{}).get("kind")!="package_related":errors.append("package scope requires relation basis")
   elif e.get("importance",{}).get("kind")=="package_related":errors.append("package exception cannot qualify an external event")
-  if e.get("activity_type") not in (policy["package_activity_types"] if package else policy["activity_types"]):errors.append("activity outside listing scope")
+  allowed_activities=policy["package_activity_types"] if package else policy["activity_types"] + (["seminar"] if e.get("category")=="jesu" and e.get("importance",{}).get("kind")=="jesu_official" else [])
+  if e.get("detail_anchor") and (e.get("category")!="jesu" or not re.fullmatch(r"[a-z0-9-]+",e["detail_anchor"])):errors.append("invalid own-event detail anchor")
+  if e.get("activity_type") not in allowed_activities:errors.append("activity outside listing scope")
   if e.get("status") not in ("scheduled","cancelled","postponed"):errors.append("unknown status")
   if e.get("importance",{}).get("kind") not in policy["importance_kinds"]:errors.append("missing major-event basis")
   for key in ("official_url","source_url"):
@@ -50,7 +52,7 @@ def active_events(data,policy):
  return sorted([e for e in data["events"] if e["status"]!="postponed" and any(today<=dt.date.fromisoformat(d) and (e.get("category")=="package" or dt.date.fromisoformat(d)<=last) for d in e["dates"])],key=lambda e:next(d for d in e["dates"] if dt.date.fromisoformat(d)>=today))
 def render(data,policy,prefix):
  events=active_events(data,policy);labels=policy["categories"]
- first=events[0]["dates"][0] if events else data["last_checked"];year,month=map(int,first[:7].split("-"))
+ year,month=map(int,data["last_checked"][:7].split("-"))
  byday={}
  for e in events:
   for d in e["dates"]:byday.setdefault(d,[]).append(e)
@@ -60,15 +62,18 @@ def render(data,policy,prefix):
   for day in week:
    if not day:cells.append('<td class="calendar-blank"></td>');continue
    d=f"{year}-{month:02d}-{day:02d}"
-   links=''.join(f'<a class="calendar-marker" href="#{prefix}{e["id"]}" aria-label="{d} {escape(e["name"])}"><span aria-hidden="true">{"×" if e["status"]=="cancelled" else "●"}</span><span class="calendar-marker-label">{labels[e["category"]]}</span></a>' for e in byday.get(d,[]))
+   links=''.join(f'<a class="calendar-marker" href="#{e.get("detail_anchor",prefix+e["id"])}" aria-label="{d} {escape(e["name"])}"><span aria-hidden="true">{"×" if e["status"]=="cancelled" else "●"}</span><span class="calendar-marker-label">{labels[e["category"]]}</span></a>' for e in byday.get(d,[]))
    cells.append(f'<td><span class="calendar-day">{day}</span>{links}</td>')
   rows.append('<tr>'+''.join(cells)+'</tr>')
  cards=[]
  for e in events:
-  dates='・'.join(date_label(d) for d in e["dates"])
+  dates='・'.join((d[:4]+"年 " if d[:4]!=data["last_checked"][:4] else "")+date_label(d) for d in e["dates"])
   status="中止" if e["status"]=="cancelled" else "開催予定"
   times=(e.get("start_time") or "開始時刻未公表")+("–"+e["end_time"] if e.get("end_time") else "")
   stale=(dt.date.fromisoformat(data["last_checked"])-dt.date.fromisoformat(e["checked_at"])).days>policy["stale_after_days"]
+  if e.get("detail_anchor"):
+   cards.append(f'<article class="local-event local-event-reference" data-calendar-item="{e["id"]}"><div class="local-event-meta"><span class="tag neutral">JeSU大阪 主催</span><span>{"要再確認" if stale else status}</span></div><p class="local-event-date">{dates}<span>{times}</span></p><h3>{escape(e["name"])}</h3><a class="text-link" href="#{e["detail_anchor"]}">上の開催案内を見る ↑</a></article>')
+   continue
   cards.append(f'''<article class="local-event" id="{prefix}{e["id"]}" data-calendar-item="{e["id"]}">
   <div class="local-event-meta"><span class="tag neutral">{labels[e["category"]]}</span><span>{"要再確認" if stale else status}</span></div>
   <p class="local-event-date">{dates}<span>{times}</span></p><h3>{escape(e["name"])}</h3>
@@ -84,8 +89,9 @@ def render(data,policy,prefix):
  <p class="calendar-note">外部イベントは各主催者による開催です。最新の日程・参加条件は公式サイトをご確認ください。</p>
  <div class="calendar-toolbar" data-calendar-controls hidden><div class="calendar-month-control"><button type="button" data-calendar-prev aria-label="前の月">←</button><label>表示月<select data-calendar-month aria-label="表示する月"></select></label><button type="button" data-calendar-next aria-label="次の月">→</button></div>
  <label class="calendar-category">種別<select data-calendar-category aria-label="イベントの種別"><option value="">すべて</option>{options}</select></label></div>
+ <nav class="calendar-month-tabs" aria-label="月別のイベント" data-calendar-tabs data-calendar-controls hidden></nav>
  <div class="calendar-layout"><div class="calendar-table-wrap"><table class="calendar-table"><caption data-calendar-caption>{year}年{month}月 府内のイベント予定</caption><thead><tr>{''.join('<th scope="col">'+x+'</th>' for x in '月火水木金土日')}</tr></thead><tbody data-calendar-body>{''.join(rows)}</tbody></table><p class="calendar-legend">● 開催予定　× 中止　日付の印から詳細へ</p><p class="calendar-updated">情報確認：{data["last_checked"].replace("-",".")} ／ 毎週更新</p></div>
- <div class="local-event-list"><p class="calendar-count" data-calendar-count role="status">{len(events)}件のイベント</p>{''.join(cards)}<p class="calendar-empty" data-calendar-empty hidden>この月・種別の掲載予定はありません。ほかの月・種別もご覧ください。</p></div></div>
+ <div class="local-event-list"><label class="calendar-list-scope" data-calendar-controls hidden>一覧の表示<select data-calendar-scope aria-label="予定一覧の表示範囲"><option value="all">これからの予定（全月）</option><option value="month">カレンダーの月のみ</option></select></label><p class="calendar-count" data-calendar-count role="status">{len(events)}件のイベント</p>{''.join(cards)}<p class="calendar-empty" data-calendar-empty hidden>選択した条件の掲載予定はありません。ほかの月・種別もご覧ください。</p></div></div>
  <noscript><p>JavaScriptが無効な場合は、上記カレンダーと日程順の一覧をご利用ください。</p></noscript>
  <script type="application/json" data-calendar-data>{payload}</script></section>'''
 def main():

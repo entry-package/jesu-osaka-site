@@ -8,6 +8,13 @@ class EventPolicyTests(unittest.TestCase):
  def rejects(self,mutate):
   mutate(self.data["events"][0])
   with self.assertRaises(ValueError):mod.validate(self.data,self.policy)
+ def test_own_seminar_has_current_month_marker_without_duplicate_detail_card(self):
+  text=mod.render(self.data,self.policy,"home-")
+  self.assertIn('2026年10月 府内のイベント予定',text)
+  self.assertIn('href="#jesu-seminar-vol2"',text)
+  self.assertNotIn('id="home-jesu-seminar-vol2-2026"',text)
+ def test_external_seminar_cannot_use_jesu_exception(self):
+  self.rejects(lambda e:e.update(activity_type="seminar"))
  def test_verified_events(self):mod.validate(self.data,self.policy)
  def test_reject_outside_osaka(self):self.rejects(lambda e:e.update(prefecture="兵庫県"))
  def test_reject_online_only(self):self.rejects(lambda e:e.update(format="online"))

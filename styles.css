@@ -2157,3 +2157,12 @@ article[id] {
 @media(max-width:560px){.report-photo {margin:28px 0;}.report-topic h3 {font-size:21px;}}
 
 .local-event dt {white-space:nowrap;}
+
+/* Month navigation keeps later announcements discoverable. */
+.calendar-month-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 24px; }
+.calendar-month-tabs[hidden], .calendar-list-scope[hidden] { display:none; }
+.calendar-month-tabs button { border:1px solid #d9d7d0; background:#fff; color:#222; padding:10px 12px; min-height:44px; cursor:pointer; font:inherit; font-size:13px; }
+.calendar-month-tabs button[aria-pressed="true"] { background:#222; color:#fff; border-color:#222; }
+.calendar-list-scope { display:flex; flex-wrap:wrap; align-items:center; gap:12px; font-size:13px; margin-bottom:18px; }
+.calendar-list-scope select { background:#fff; color:#222; border:1px solid #d9d7d0; padding:10px; min-height:44px; font:inherit; max-width:100%; }
+.local-event-reference { background:#f2efea; padding:24px; }

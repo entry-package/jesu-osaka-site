@@ -1,6 +1,6 @@
 const { test } = require("node:test");
 const assert = require("node:assert/strict");
-const { statusLabel, occurrences } = require("../calendar.js");
+const { statusLabel, occurrences, calendarMonths, upcomingIds } = require("../calendar.js");
 const example = {
   id: "x",
   status: "scheduled",
@@ -50,4 +50,20 @@ test("unknown postponement is absent and cancellation remains visible", () => {
     ).length,
     2,
   );
+});
+
+test("calendar starts in current month even when first event is next month", () => {
+  assert.equal(calendarMonths([example], "2026-10-21")[0], "2026-10");
+});
+test("month range crosses years and retains distant published dates", () => {
+  const months = calendarMonths([{...example, dates:["2028-01-01"]}], "2026-10-21");
+  assert.ok(months.includes("2026-12"));
+  assert.ok(months.includes("2027-01"));
+  assert.equal(months.at(-1), "2028-01");
+});
+test("all-month listing retains December and next year while month scope filters", () => {
+  const events = [example, {...example,id:"dec",dates:["2026-12-26","2026-12-27"]}, {...example,id:"mar",dates:["2027-03-13"]}];
+  assert.deepEqual([...upcomingIds(events,"2026-10","","2026-10-21","all")], ["x","dec","mar"]);
+  assert.deepEqual([...upcomingIds(events,"2026-12","","2026-10-21","month")], ["dec"]);
+  assert.equal(upcomingIds(events,"2026-10","team","2026-10-21","all").size,0);
 });

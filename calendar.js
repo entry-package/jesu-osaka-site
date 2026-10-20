@@ -37,8 +37,21 @@
           .map((d) => ({ date: d, event: e })),
       );
   }
+  function calendarMonths(events, today) {
+    const base = new Date(today.slice(0, 7) + "-01T00:00:00Z");
+    const last = events.flatMap(e => e.dates).filter(d => d >= today).sort().at(-1);
+    const end = last ? new Date(last.slice(0, 7) + "-01T00:00:00Z") : base;
+    const count = Math.max(7, (end.getUTCFullYear() - base.getUTCFullYear()) * 12 + end.getUTCMonth() - base.getUTCMonth() + 1);
+    return Array.from({length: count}, (_, i) => {
+      const date = new Date(base); date.setUTCMonth(date.getUTCMonth() + i);
+      return date.toISOString().slice(0, 7);
+    });
+  }
+  function upcomingIds(events, month, category, today, scope) {
+    return new Set(occurrences(events, scope === "all" ? "" : month, category, today).map(x => x.event.id));
+  }
   if (typeof module !== "undefined")
-    module.exports = { statusLabel, occurrences };
+    module.exports = { statusLabel, occurrences, calendarMonths, upcomingIds };
   if (typeof document === "undefined") return;
   const today = new Intl.DateTimeFormat("sv-SE", {
     timeZone: "Asia/Tokyo",
@@ -59,22 +72,10 @@
         el.querySelector(".local-event-meta > span:last-child").textContent =
           statusLabel(e, today);
     });
-    const first = payload.events
-      .flatMap((e) => e.dates)
-      .filter((d) => d >= today)
-      .sort()[0];
-    let month = (first || today).slice(0, 7);
-    const months = [];
-    const base = new Date(today.slice(0, 7) + "-01T00:00:00Z");
-    const lastPublished = payload.events.flatMap(e => e.dates).filter(d => d >= today).sort().at(-1);
-    const lastMonth = lastPublished ? new Date(lastPublished.slice(0,7) + "-01T00:00:00Z") : base;
-    const monthCount = Math.max(7, (lastMonth.getUTCFullYear()-base.getUTCFullYear())*12+lastMonth.getUTCMonth()-base.getUTCMonth()+1);
-    for (let i = 0; i < monthCount; i++) {
-      const d = new Date(base);
-      d.setUTCMonth(d.getUTCMonth() + i);
-      months.push(d.toISOString().slice(0, 7));
-    }
-    if (!months.includes(month)) month = months[0];
+    const scopeSelect = root.querySelector("[data-calendar-scope]");
+    const tabs = root.querySelector("[data-calendar-tabs]");
+    const months = calendarMonths(payload.events, today);
+    let month = months[0];
     monthSelect.replaceChildren(
       ...months.map((m) => {
         const o = document.createElement("option");
@@ -91,7 +92,7 @@
       month = monthSelect.value;
       const category = categorySelect.value;
       const dated = occurrences(payload.events, month, category, today);
-      const visibleIds = new Set(dated.map((x) => x.event.id));
+      const visibleIds = upcomingIds(payload.events, month, category, today, scopeSelect.value);
       items.forEach(
         (el) => (el.hidden = !visibleIds.has(el.dataset.calendarItem)),
       );
@@ -121,7 +122,7 @@
               .filter((x) => x.date === date)
               .forEach(({ event }) => {
                 const a = document.createElement("a");
-                a.href = "#" + root.dataset.calendarPrefix + event.id;
+                a.href = "#" + (event.detail_anchor || root.dataset.calendarPrefix + event.id);
                 a.className = "calendar-marker";
                 a.setAttribute(
                   "aria-label",
@@ -150,12 +151,27 @@
       root.querySelector("[data-calendar-caption]").textContent =
         year + "年" + m + "月 府内のイベント予定";
       root.querySelector("[data-calendar-count]").textContent =
-        visibleIds.size + "件のイベント";
+        (scopeSelect.value === "all" ? "これからの予定（全月） " : year + "年" + m + "月 ") + visibleIds.size + "件";
+      tabs.replaceChildren(...months.map(value => {
+        const button = document.createElement("button");
+        button.type = "button";
+        const count = upcomingIds(payload.events, value, category, today, "month").size;
+        button.textContent = value.replace("-", "年") + "月（" + count + "件）";
+        button.setAttribute("aria-pressed", String(value === month));
+        button.addEventListener("click", () => {
+          monthSelect.value = value;
+          scopeSelect.value = "month";
+          render(); wrapped();
+        });
+        return button;
+      }));
     };
-    monthSelect.addEventListener("change", render);
+    monthSelect.addEventListener("change", () => {scopeSelect.value = "month"; render();});
+    scopeSelect.addEventListener("change", render);
     categorySelect.addEventListener("change", render);
     root.querySelector("[data-calendar-prev]").addEventListener("click", () => {
       monthSelect.selectedIndex = Math.max(0, monthSelect.selectedIndex - 1);
+      scopeSelect.value = "month";
       render();
     });
     root.querySelector("[data-calendar-next]").addEventListener("click", () => {
@@ -163,6 +179,7 @@
         months.length - 1,
         monthSelect.selectedIndex + 1,
       );
+      scopeSelect.value = "month";
       render();
     });
     const wrapped = () => {

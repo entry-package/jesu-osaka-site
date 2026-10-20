@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "effective_date": "2026-10-20",
+  "cadence": "毎週月曜日 09:00 JST",
+  "lookahead_days": 180,
+  "stale_after_days": 8,
+  "categories": {
+    "jesu": "JeSU関連",
+    "publisher": "ゲームメーカー",
+    "team": "プロチーム",
+    "creator": "配信者",
+    "public": "自治体・主要大会"
+  },
+  "importance_kinds": [
+    "jesu_official",
+    "publisher_national_final",
+    "publisher_official_festival",
+    "team_creator_major",
+    "government_supported_major"
+  ],
+  "source_hosts": [
+    "jesu.or.jp",
+    "jesu-osaka.jp",
+    "konami.com",
+    "redee.co.jp",
+    "mitsui-shopping-park.com",
+    "pref.osaka.lg.jp"
+  ],
+  "major_capacity_threshold": 300,
+  "publication": "提示版の確認後に公開。毎週の自動処理は公式情報調査・検証・確認版保存まで。"
+}

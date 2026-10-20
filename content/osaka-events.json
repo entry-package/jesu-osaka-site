@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "policy_version": "1.0",
+  "last_checked": "2026-10-20",
+  "timezone": "Asia/Tokyo",
+  "events": [
+    {
+      "id": "lalaport-izumi-2026",
+      "series_id": "lalaport-cup5",
+      "name": "第5回ららぽーとeスポーツ杯｜和泉会場予選",
+      "organizer": "REDEE / REDEE Gaming",
+      "category": "public",
+      "city": "和泉市",
+      "venue": "ららぽーと和泉",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "dates": [
+        "2026-11-07",
+        "2026-11-08"
+      ],
+      "start_time": "10:00",
+      "end_time": "18:00",
+      "fee": "無料（大会参加は事前申込）",
+      "official_url": "https://redee.co.jp/lalaport-esportscup5/",
+      "source_url": "https://mitsui-shopping-park.com/lalaport/kadoma/event/3603851.html",
+      "source_owner": "主催者 REDEE",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "government_supported_major",
+        "evidence_url": "https://www.pref.osaka.lg.jp/o070080/e-sports_hojokin.html"
+      },
+      "summary": "大阪府の大規模eスポーツ大会開催支援の対象大会。和泉会場で予選を開催。"
+    },
+    {
+      "id": "lalaport-kadoma-qualifier-2026",
+      "series_id": "lalaport-cup5",
+      "name": "第5回ららぽーとeスポーツ杯｜門真会場予選",
+      "organizer": "REDEE / REDEE Gaming",
+      "category": "public",
+      "city": "門真市",
+      "venue": "ららぽーと門真",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "dates": [
+        "2026-11-14",
+        "2026-11-15"
+      ],
+      "start_time": "10:00",
+      "end_time": "18:00",
+      "fee": "無料（大会参加は事前申込）",
+      "official_url": "https://redee.co.jp/lalaport-esportscup5/",
+      "source_url": "https://mitsui-shopping-park.com/lalaport/kadoma/event/3603851.html",
+      "source_owner": "主催者 REDEE",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "government_supported_major",
+        "evidence_url": "https://www.pref.osaka.lg.jp/o070080/e-sports_hojokin.html"
+      },
+      "summary": "大阪府の大規模eスポーツ大会開催支援の対象大会。門真会場で予選を開催。"
+    },
+    {
+      "id": "lalaport-student-2026",
+      "series_id": "lalaport-cup5",
+      "name": "第5回ららぽーとeスポーツ杯｜高校・大学生大会",
+      "organizer": "REDEE / REDEE Gaming",
+      "category": "public",
+      "city": "門真市",
+      "venue": "ららぽーと門真",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "dates": [
+        "2026-11-28"
+      ],
+      "start_time": "10:00",
+      "end_time": "18:00",
+      "fee": "無料（大会参加は事前申込）",
+      "official_url": "https://redee.co.jp/lalaport-esportscup5/",
+      "source_url": "https://mitsui-shopping-park.com/lalaport/kadoma/event/3603851.html",
+      "source_owner": "主催者 REDEE",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "government_supported_major",
+        "evidence_url": "https://www.pref.osaka.lg.jp/o070080/e-sports_hojokin.html"
+      },
+      "summary": "高校生・大学生を対象にしたストリートファイター6の大会。"
+    },
+    {
+      "id": "lalaport-final-2026",
+      "series_id": "lalaport-cup5",
+      "name": "第5回ららぽーとeスポーツ杯｜決勝・グランドファイナル",
+      "organizer": "REDEE / REDEE Gaming",
+      "category": "public",
+      "city": "門真市",
+      "venue": "ららぽーと門真",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "dates": [
+        "2026-11-29"
+      ],
+      "start_time": "10:00",
+      "end_time": "18:00",
+      "fee": "無料（出場条件は公式案内をご確認ください）",
+      "official_url": "https://redee.co.jp/lalaport-esportscup5/",
+      "source_url": "https://mitsui-shopping-park.com/lalaport/kadoma/event/3603851.html",
+      "source_owner": "主催者 REDEE",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "government_supported_major",
+        "evidence_url": "https://www.pref.osaka.lg.jp/o070080/e-sports_hojokin.html"
+      },
+      "summary": "各予選を通過した参加者が集う決勝ラウンド・グランドファイナル。"
+    },
+    {
+      "id": "prospi-fanfesta-osaka-2026",
+      "series_id": "prospi-fanfesta2026",
+      "name": "プロスピA ファンフェスタ 2026シーズン in 大阪",
+      "organizer": "コナミデジタルエンタテインメント",
+      "category": "publisher",
+      "city": "大阪市北区",
+      "venue": "グランキューブ大阪",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "dates": [
+        "2026-12-26"
+      ],
+      "start_time": "10:00",
+      "end_time": "19:00",
+      "fee": "入場無料（参加条件は公式案内をご確認ください）",
+      "official_url": "https://www.konami.com/games/prospi_a/fanfesta/2026/osaka/",
+      "source_url": "https://www.konami.com/games/prospi_a/fanfesta/2026/osaka/",
+      "source_owner": "ゲームメーカー KONAMI",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "publisher_national_final",
+        "evidence_url": "https://www.konami.com/games/prospi_a/fanfesta/2026/osaka/"
+      },
+      "summary": "プロスピAリーグ日本一決定戦などを実施予定のメーカー公式ファンイベント。"
+    }
+  ]
+}

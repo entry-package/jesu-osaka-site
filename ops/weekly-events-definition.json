@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "jesu-osaka-events-weekly",
+  "actor": "codex",
+  "scope": "company",
+  "prompt": "JeSU大阪サイトの府内イベント予定を週次更新する。/Users/yukuno/.local/share/jesu-osaka/repo/docs/weekly-event-update.md に従い、公式情報調査から専用worktreeでの更新・検証・既存共有Driveへの確認版保存・読戻し・Notionの確認待ち記録まで実行する。実装だけや設定だけで終わらず、可能な工程を完遂する。外部公開・push・送信はしない。今回が定刻外なら手動検証として実行する。",
+  "model": null,
+  "reasoning_effort": null,
+  "cwds": [
+    "/Users/yukuno/.local/share/jesu-osaka/repo"
+  ],
+  "rrule": "FREQ=WEEKLY;BYDAY=MO;BYHOUR=9;BYMINUTE=0;BYSECOND=0"
+}

@@ -6,7 +6,7 @@ p=argparse.ArgumentParser();p.add_argument('release',type=Path);p.add_argument('
 for source in a.release.glob('*.html'):
  text=source.read_text()
  text=text.replace('<link rel="stylesheet" href="./styles.css" />','<style>'+ (a.release/'styles.css').read_text()+'</style>')
- text=re.sub(r'<script src="\./(site.js|contact-submit.js)" defer></script>',lambda m:'<script>document.addEventListener("DOMContentLoaded", () => {\n'+ (a.release/m[1]).read_text()+'\n});</script>',text)
+ text=re.sub(r'<script src="\./(site.js|calendar.js|contact-submit.js)" defer></script>',lambda m:'<script>document.addEventListener("DOMContentLoaded", () => {\n'+ (a.release/m[1]).read_text()+'\n});</script>',text)
  def inline(m):
   path=a.release/m[2].removeprefix('./');mime=mimetypes.guess_type(path)[0] or 'application/octet-stream'
   return m[1]+'data:'+mime+';base64,'+base64.b64encode(path.read_bytes()).decode()+m[3]

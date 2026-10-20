@@ -24,7 +24,7 @@
       "official_url": "https://redee.co.jp/lalaport-esportscup5/",
       "source_url": "https://mitsui-shopping-park.com/lalaport/kadoma/event/3603851.html",
       "source_owner": "主催者 REDEE",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-21",
       "status": "scheduled",
       "importance": {
         "kind": "government_supported_major",
@@ -53,7 +53,7 @@
       "official_url": "https://redee.co.jp/lalaport-esportscup5/",
       "source_url": "https://mitsui-shopping-park.com/lalaport/kadoma/event/3603851.html",
       "source_owner": "主催者 REDEE",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-21",
       "status": "scheduled",
       "importance": {
         "kind": "government_supported_major",
@@ -81,7 +81,7 @@
       "official_url": "https://redee.co.jp/lalaport-esportscup5/",
       "source_url": "https://mitsui-shopping-park.com/lalaport/kadoma/event/3603851.html",
       "source_owner": "主催者 REDEE",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-21",
       "status": "scheduled",
       "importance": {
         "kind": "government_supported_major",
@@ -109,7 +109,7 @@
       "official_url": "https://redee.co.jp/lalaport-esportscup5/",
       "source_url": "https://mitsui-shopping-park.com/lalaport/kadoma/event/3603851.html",
       "source_owner": "主催者 REDEE",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-21",
       "status": "scheduled",
       "importance": {
         "kind": "government_supported_major",
@@ -137,7 +137,7 @@
       "official_url": "https://www.konami.com/games/prospi_a/fanfesta/2026/osaka/",
       "source_url": "https://www.konami.com/games/prospi_a/fanfesta/2026/osaka/",
       "source_owner": "ゲームメーカー KONAMI",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-21",
       "status": "scheduled",
       "importance": {
         "kind": "publisher_national_final",
@@ -165,7 +165,7 @@
       "official_url": "https://www.ubisoft.com/ja-jp/esports/rainbow-six/siege/news-updates/bgHjRmr9Bh5q6vjXkI2cd/blast-r6-osaka-major---",
       "source_url": "https://www.ubisoft.com/ja-jp/esports/rainbow-six/siege/competition/513",
       "source_owner": "ゲームメーカー Ubisoft / BLAST R6 Esports",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-21",
       "status": "scheduled",
       "importance": {
         "kind": "publisher_international_major",
@@ -245,7 +245,7 @@
       "prefecture": "大阪府",
       "format": "offline",
       "source_owner": "PACkageまたは関係イベント主催者",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-21",
       "status": "scheduled",
       "importance": {
         "kind": "package_related",
@@ -272,12 +272,12 @@
       "city": "大阪市中央区",
       "organizer": "株式会社PACkage",
       "official_url": "https://peatix.com/event/5118874",
-      "source_url": "https://www.package-inc.com/brands/pacfes/",
+      "source_url": "https://peatix.com/event/5118874",
       "category": "package",
       "prefecture": "大阪府",
       "format": "offline",
       "source_owner": "PACkageまたは関係イベント主催者",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-21",
       "status": "scheduled",
       "importance": {
         "kind": "package_related",
@@ -289,8 +289,10 @@
         "evidence_url": "https://www.package-inc.com/brands/pacfes/"
       },
       "activity_type": "festival",
-      "summary": "PACkage主催のデジタル複合フェス。ゲームと音楽を楽しむイベント。",
-      "fee": "料金・参加条件は公式案内をご確認ください"
+      "summary": "BYOC（PC持ち込みゲーム）と音楽を楽しむ複合フェス。3Fゲームフロアは20:00まで。",
+      "fee": "一般5,000円＋1ドリンク1,000円（BYOC・各種オプションは公式案内へ）",
+      "start_time": "13:00",
+      "end_time": "22:00"
     },
     {
       "id": "paclan-10th-day26-2026",
@@ -307,7 +309,7 @@
       "prefecture": "大阪府",
       "format": "offline",
       "source_owner": "PACkageまたは関係イベント主催者",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-21",
       "status": "scheduled",
       "importance": {
         "kind": "package_related",
@@ -340,7 +342,7 @@
       "prefecture": "大阪府",
       "format": "offline",
       "source_owner": "PACkageまたは関係イベント主催者",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-21",
       "status": "scheduled",
       "importance": {
         "kind": "package_related",
@@ -367,13 +369,13 @@
       "venue": "梅田スカイビル 3階 ステラホール",
       "city": "大阪市北区",
       "organizer": "ゲームパビリオンjp準備会（実行委員会）",
-      "official_url": "https://gamepavilion.jp/",
-      "source_url": "https://www.package-inc.com/brands/gamepavilion/",
+      "official_url": "https://peatix.com/event/5106563",
+      "source_url": "https://peatix.com/event/5106563",
       "category": "package",
       "prefecture": "大阪府",
       "format": "offline",
       "source_owner": "PACkageまたは関係イベント主催者",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-21",
       "status": "scheduled",
       "importance": {
         "kind": "package_related",
@@ -386,7 +388,9 @@
       },
       "activity_type": "exhibition",
       "summary": "インディーゲームの展示・試遊イベント。ゲームを遊び、制作者と交流できます。",
-      "fee": "料金・参加条件は公式案内をご確認ください"
+      "fee": "入場1,100円。小中学生以下無料・学割あり（条件は公式案内へ）",
+      "start_time": "11:00",
+      "end_time": "17:00"
     },
     {
       "id": "jesu-seminar-vol2-2026",
@@ -406,7 +410,7 @@
       "official_url": "https://peatix.com/event/5230213",
       "source_url": "https://peatix.com/event/5230213",
       "source_owner": "JeSU大阪 公式申込ページ",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-21",
       "status": "scheduled",
       "importance": {
         "kind": "jesu_official",
@@ -415,6 +419,40 @@
       "summary": "佐加一騎さん・竹村龍樹さんを迎える勉強会と交流会。",
       "activity_type": "seminar",
       "detail_anchor": "jesu-seminar-vol2"
+    },
+    {
+      "id": "spaworld-halloween-digital-2026",
+      "series_id": "spaworld-halloween-2026",
+      "name": "ハロウィンデジタルコンテンツ体験会",
+      "organizer": "SPAWORLD HOTEL&RESORT",
+      "category": "package",
+      "city": "大阪市浪速区",
+      "venue": "SPAWORLD HOTEL&RESORT 2Fロビー",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "dates": [
+        "2026-10-24",
+        "2026-10-25"
+      ],
+      "start_time": "11:00",
+      "end_time": "18:00",
+      "fee": "体験無料・予約不要（スパワールド入館料は別途）",
+      "official_url": "https://www.spaworld.co.jp/event/spaworld-gokuraku-halloween2026/",
+      "source_url": "https://www.spaworld.co.jp/event/spaworld-gokuraku-halloween2026/",
+      "source_owner": "会場公式・PACkage公式X",
+      "checked_at": "2026-10-21",
+      "status": "scheduled",
+      "importance": {
+        "kind": "package_related",
+        "evidence_url": "https://www.spaworld.co.jp/event/spaworld-gokuraku-halloween2026/"
+      },
+      "package_relation": {
+        "entity": "株式会社PACkage",
+        "role": "企画・運営",
+        "evidence_url": "https://x.com/PACkage_2018/status/2112455182881833371"
+      },
+      "activity_type": "workshop",
+      "summary": "ロブロックスのハロウィンワールドと、ぷよぷよプログラミングのオリジナルハロウィンアレンジを楽しめる体験会。"
     }
   ]
 }

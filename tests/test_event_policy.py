@@ -33,6 +33,12 @@ class EventPolicyTests(unittest.TestCase):
  def test_package_future_announcement_not_lost_after_180_days(self):
   e=copy.deepcopy(next(x for x in self.data["events"] if x["category"]=="package"));e["dates"]=["2028-01-01"]
   self.assertEqual(mod.active_events({**self.data,"events":[e]},self.policy),[e])
+ def test_official_package_post_can_confirm_relation(self):
+  e=copy.deepcopy(next(x for x in self.data["events"] if x["category"]=="package"));e["package_relation"]["evidence_url"]="https://x.com/PACkage_2018/status/2112455182881833371"
+  mod.validate({**self.data,"events":[e]},self.policy)
+ def test_other_accounts_cannot_confirm_package_relation(self):
+  e=copy.deepcopy(next(x for x in self.data["events"] if x["category"]=="package"));e["package_relation"]["evidence_url"]="https://x.com/another_account/status/2112455182881833371"
+  with self.assertRaises(ValueError):mod.validate({**self.data,"events":[e]},self.policy)
  def test_package_relation_is_required(self):
   e=copy.deepcopy(next(x for x in self.data["events"] if x["category"]=="package"));e.pop("package_relation")
   with self.assertRaises(ValueError):mod.validate({**self.data,"events":[e]},self.policy)

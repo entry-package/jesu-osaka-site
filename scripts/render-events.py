@@ -20,7 +20,9 @@ def validate(data,policy):
    relation=e.get("package_relation",{})
    if relation.get("entity")!="株式会社PACkage" or relation.get("role") not in policy["package_roles"]:errors.append("missing PACkage involvement")
    evidence=urlsplit(relation.get("evidence_url",""));host=evidence.hostname or ""
-   if evidence.scheme!="https" or not (host=="package-inc.com" or host.endswith(".package-inc.com")):errors.append("missing PACkage official relationship evidence")
+   official_company=host=="package-inc.com" or host.endswith(".package-inc.com")
+   official_company_post=host=="x.com" and re.fullmatch(r"/PACkage_2018/status/[0-9]+",evidence.path)
+   if evidence.scheme!="https" or evidence.username or evidence.password or not (official_company or official_company_post):errors.append("missing PACkage official relationship evidence")
    if e.get("importance",{}).get("kind")!="package_related":errors.append("package scope requires relation basis")
   elif e.get("importance",{}).get("kind")=="package_related":errors.append("package exception cannot qualify an external event")
   allowed_activities=policy["package_activity_types"] if package else policy["activity_types"] + (["seminar"] if e.get("category")=="jesu" and e.get("importance",{}).get("kind")=="jesu_official" else [])

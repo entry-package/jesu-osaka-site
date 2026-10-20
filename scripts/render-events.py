@@ -24,7 +24,7 @@ def validate(data,policy):
   if u.scheme!="https" or not u.hostname or not any(u.hostname==h or u.hostname.endswith("."+h) for h in policy["source_hosts"]):errors.append("missing official importance evidence")
   if e.get("importance",{}).get("kind")=="team_creator_major" and e.get("capacity",0)<policy["major_capacity_threshold"]:errors.append("large team/creator event capacity unconfirmed")
   checked=dt.date.fromisoformat(e["checked_at"])
-  if checked>dt.date.fromisoformat(data["last_checked"]):errors.append("future verification date")
+  if checked>dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date():errors.append("future verification date")
   if not e.get("dates") or e["dates"]!=sorted(set(e["dates"])):errors.append("dates missing or duplicated")
   for d in e["dates"]:
    dt.date.fromisoformat(d);slot=(e.get("series_id",e["id"]),d,e["venue"])

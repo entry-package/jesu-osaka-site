@@ -12,6 +12,9 @@ class EventPolicyTests(unittest.TestCase):
  def test_reject_outside_osaka(self):self.rejects(lambda e:e.update(prefecture="兵庫県"))
  def test_reject_online_only(self):self.rejects(lambda e:e.update(format="online"))
  def test_reject_nonofficial_and_host_spoof(self):self.rejects(lambda e:e.update(official_url="https://redee.co.jp.example.com/event"))
+ def test_partial_recheck_may_be_newer_than_last_complete_check(self):
+  self.data["last_checked"]="2026-10-19"
+  mod.validate(self.data,self.policy)
  def test_reject_duplicate_event_slot(self):
   x=copy.deepcopy(self.data["events"][0]);x["id"]="duplicate";self.data["events"].append(x)
   with self.assertRaises(ValueError):mod.validate(self.data,self.policy)

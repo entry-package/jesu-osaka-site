@@ -21,7 +21,7 @@ def validate(data,policy):
    u=urlsplit(e.get(key,""));host=u.hostname or ""
    if u.scheme!="https" or u.username or u.password or not any(host==h or host.endswith("."+h) for h in policy["source_hosts"]):errors.append(e["id"]+": unverified official host "+key)
   u=urlsplit(e.get("importance",{}).get("evidence_url",""))
-  if u.scheme!="https" or not u.hostname:errors.append("missing importance evidence")
+  if u.scheme!="https" or not u.hostname or not any(u.hostname==h or u.hostname.endswith("."+h) for h in policy["source_hosts"]):errors.append("missing official importance evidence")
   if e.get("importance",{}).get("kind")=="team_creator_major" and e.get("capacity",0)<policy["major_capacity_threshold"]:errors.append("large team/creator event capacity unconfirmed")
   checked=dt.date.fromisoformat(e["checked_at"])
   if checked>dt.date.fromisoformat(data["last_checked"]):errors.append("future verification date")

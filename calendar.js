@@ -7,6 +7,38 @@
     creator: "配信者",
     public: "自治体・主要大会",
   };
+  function statusLabel(event, today) {
+    const label =
+      event.status === "cancelled"
+        ? "中止"
+        : event.status === "postponed"
+          ? "延期"
+          : "開催予定";
+    const stale =
+      Date.parse(today + "T00:00:00Z") -
+        Date.parse(event.checked_at + "T00:00:00Z") >
+      8 * 86400000;
+    return stale
+      ? event.status === "scheduled"
+        ? "要再確認"
+        : label + "・要再確認"
+      : label;
+  }
+  function occurrences(events, month, category, today) {
+    return events
+      .filter(
+        (e) =>
+          e.status !== "postponed" && (!category || e.category === category),
+      )
+      .flatMap((e) =>
+        e.dates
+          .filter((d) => d.startsWith(month) && d >= today)
+          .map((d) => ({ date: d, event: e })),
+      );
+  }
+  if (typeof module !== "undefined")
+    module.exports = { statusLabel, occurrences };
+  if (typeof document === "undefined") return;
   const today = new Intl.DateTimeFormat("sv-SE", {
     timeZone: "Asia/Tokyo",
     year: "numeric",
@@ -20,15 +52,11 @@
     const monthSelect = root.querySelector("[data-calendar-month]");
     const categorySelect = root.querySelector("[data-calendar-category]");
     const items = [...root.querySelectorAll("[data-calendar-item]")];
-    const factToday = Date.parse(today + "T00:00:00Z");
     payload.events.forEach((e) => {
       const el = items.find((item) => item.dataset.calendarItem === e.id);
-      if (
-        el &&
-        factToday - Date.parse(e.checked_at + "T00:00:00Z") > 8 * 86400000
-      )
+      if (el)
         el.querySelector(".local-event-meta > span:last-child").textContent =
-          "要再確認";
+          statusLabel(e, today);
     });
     const first = payload.events
       .flatMap((e) => e.dates)
@@ -58,14 +86,7 @@
     const render = () => {
       month = monthSelect.value;
       const category = categorySelect.value;
-      const matches = payload.events.filter(
-        (e) => !category || e.category === category,
-      );
-      const dated = matches.flatMap((e) =>
-        e.dates
-          .filter((d) => d.startsWith(month) && d >= today)
-          .map((d) => ({ date: d, event: e })),
-      );
+      const dated = occurrences(payload.events, month, category, today);
       const visibleIds = new Set(dated.map((x) => x.event.id));
       items.forEach(
         (el) => (el.hidden = !visibleIds.has(el.dataset.calendarItem)),

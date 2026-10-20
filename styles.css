@@ -1966,12 +1966,14 @@ article[id] {
 }
 .local-event dl div {
   display: grid;
-  grid-template-columns: 32px 1fr;
+  grid-template-columns: 6.5em minmax(0, 1fr);
   gap: 12px;
   margin-bottom: 8px;
 }
 .local-event dd {
   margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .local-event-footer {
   display: flex;
@@ -2153,3 +2155,5 @@ article[id] {
 .report-topic .eyebrow {margin:0 0 8px;color:#b51e2b;}
 .report-topic h3 {margin:0 0 18px;font-size:24px;line-height:1.5;}
 @media(max-width:560px){.report-photo {margin:28px 0;}.report-topic h3 {font-size:21px;}}
+
+.local-event dt {white-space:nowrap;}

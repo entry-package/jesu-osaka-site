@@ -3,191 +3,165 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>お問い合わせ | 一般社団法人大阪府eスポーツ連合</title>
-    <meta name="description" content="一般社団法人大阪府eスポーツ連合へのお問い合わせページです。" />
+    <title>お問い合わせ | JeSU大阪</title>
+    <meta
+      name="description"
+      content="JeSU大阪への講演・後援・イベント協力・会員・取材のご相談を受け付けています。"
+    />
     <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#b51e2b" />
+    <link rel="icon" href="./assets/mark.png" />
+    <link rel="canonical" href="https://www.jesu-osaka.jp/contact.html" />
+    <meta property="og:title" content="お問い合わせ | JeSU大阪" />
+    <meta
+      property="og:description"
+      content="JeSU大阪への講演・後援・イベント協力・会員・取材のご相談を受け付けています。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:site_name" content="JeSU大阪" />
+    <meta property="og:url" content="https://www.jesu-osaka.jp/contact.html" />
+    <meta
+      property="og:image"
+      content="https://www.jesu-osaka.jp/assets/members.jpg"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="stylesheet" href="./styles.css" />
-    <style>
-      .contact-hero-section {
-        text-align: center;
-        padding: clamp(52px, 7vw, 96px) clamp(18px, 5vw, 72px) clamp(34px, 5vw, 60px);
-        background:
-          linear-gradient(120deg, rgba(245, 247, 251, 0.96), rgba(255, 255, 255, 0.82)),
-          radial-gradient(circle at 92% 12%, rgba(217, 54, 68, 0.16), transparent 30%),
-          radial-gradient(circle at 8% 92%, rgba(240, 180, 41, 0.2), transparent 32%);
-      }
-      .contact-hero-inner {
-        max-width: 820px;
-        margin: 0 auto;
-      }
-      .contact-hero-inner h1 {
-        font-size: clamp(2.4rem, 5vw, 4rem);
-        margin-bottom: 16px;
-      }
-      .contact-hero-inner .lead {
-        margin: 0 auto;
-        color: #384456;
-      }
-      .contact-body {
-        padding-top: clamp(36px, 5vw, 60px);
-        padding-bottom: clamp(56px, 7vw, 96px);
-      }
-      .contact-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.4fr) minmax(300px, 0.6fr);
-        gap: clamp(22px, 4vw, 40px);
-        align-items: start;
-        max-width: 1180px;
-        margin: 0 auto;
-      }
-      .form-card {
-        padding: clamp(24px, 4vw, 40px);
-        background: white;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        box-shadow: var(--shadow);
-      }
-      .form-card h2 {
-        font-size: clamp(1.5rem, 2.6vw, 2rem);
-      }
-      .form-card .form-lead {
-        color: var(--muted);
-        margin-bottom: 26px;
-      }
-      .native-form label {
-        display: block;
-        margin-bottom: 18px;
-        font-weight: 800;
-        color: var(--ink);
-      }
-      .native-form label .req {
-        color: var(--red);
-      }
-      .native-form input,
-      .native-form select,
-      .native-form textarea {
-        display: block;
-        width: 100%;
-        margin-top: 8px;
-        padding: 12px 14px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        font: inherit;
-        font-weight: 500;
-        color: var(--ink);
-        background: #fff;
-      }
-      .native-form input:focus,
-      .native-form select:focus,
-      .native-form textarea:focus {
-        outline: none;
-        border-color: var(--blue);
-        box-shadow: 0 0 0 3px rgba(31, 78, 163, 0.12);
-      }
-      .native-form textarea {
-        min-height: 170px;
-        resize: vertical;
-      }
-      .native-form .form-submit {
-        margin-top: 24px;
-      }
-      .native-form .hp {
-        position: absolute;
-        left: -9999px;
-        width: 1px;
-        height: 1px;
-        opacity: 0;
-      }
-      .contact-routes {
-        align-self: start;
-      }
-      .contact-routes a:not(.button) {
-        color: var(--blue);
-        font-weight: 800;
-        text-decoration: underline;
-        text-underline-offset: 0.18em;
-      }
-      .contact-routes .route-link {
-        margin-top: 4px;
-        font-weight: 900;
-        text-decoration: none;
-      }
-      @media (max-width: 1020px) {
-        .contact-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
+    <script src="./site.js" defer></script>
+    <script src="./contact-submit.js" defer></script>
   </head>
-  <body>
+  <body id="top">
+    <a class="skip-link" href="#main">本文へ移動</a>
+    <div class="utility">
+      <span>一般社団法人大阪府eスポーツ連合</span
+      ><a href="https://x.com/OsakaGamers" target="_blank" rel="noopener"
+        >公式X @OsakaGamers <span aria-hidden="true">↗</span></a
+      >
+    </div>
     <header class="site-header">
-      <a class="brand" href="./index.html" aria-label="JeSU Osaka ホーム">
-        <img src="./assets/logo.png" alt="JeSU Osaka" />
-        <span>
-          <strong>JeSU Osaka</strong>
-          <small>一般社団法人大阪府eスポーツ連合</small>
-        </span>
-      </a>
-      <nav class="nav" aria-label="サイト内メニュー">
-        <a href="./index.html#news">新着情報</a>
-        <a href="./index.html#activities">活動内容</a>
-        <a href="./index.html#records">活動実績</a>
-        <a href="./index.html#members">メンバー</a>
-        <a href="./index.html#about">団体概要</a>
-        <a href="./index.html#calendar">カレンダー</a>
-        <a href="./contact.html">お問い合わせ</a>
+      <a class="brand" href="./index.html" aria-label="JeSU Osaka ホーム"
+        ><img
+          src="./assets/logo.png"
+          width="58"
+          height="43"
+          alt="JeSU Osaka"
+        /><span
+          ><strong>JeSU OSAKA</strong><small>大阪府eスポーツ連合</small></span
+        ></a
+      >
+      <nav class="nav" aria-label="メインメニュー">
+        <a href="./news.html">お知らせ</a
+        ><a href="./index.html#activities">活動内容</a
+        ><a href="./events.html">イベント</a
+        ><a href="./index.html#about">私たちについて</a
+        ><a href="./contact.html">お問い合わせ</a>
       </nav>
       <details class="mobile-menu">
-        <summary>メニュー</summary>
-        <nav aria-label="スマホ用サイト内メニュー">
-          <a href="./index.html#news">新着情報</a>
-          <a href="./index.html#activities">活動内容</a>
-          <a href="./index.html#records">活動実績</a>
-          <a href="./index.html#members">メンバー</a>
-          <a href="./index.html#about">団体概要</a>
-          <a href="./index.html#calendar">カレンダー</a>
-          <a href="./contact.html">お問い合わせ</a>
+        <summary>メニュー <span aria-hidden="true">＋</span></summary>
+        <nav aria-label="モバイルメニュー">
+          <a href="./news.html">お知らせ</a
+          ><a href="./index.html#activities">活動内容</a
+          ><a href="./events.html">イベント</a
+          ><a href="./index.html#about">私たちについて</a
+          ><a href="./contact.html">お問い合わせ</a>
         </nav>
       </details>
     </header>
-
-    <main id="top">
-      <section class="contact-hero-section">
-        <div class="contact-hero-inner">
-          <p class="eyebrow">Contact</p>
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <a class="breadcrumb" href="./index.html">ホーム</a
+          ><span class="breadcrumb-separator" aria-hidden="true"> / </span
+          ><span class="breadcrumb-current">お問い合わせ</span>
+          <p class="eyebrow">CONTACT</p>
           <h1>お問い合わせ</h1>
           <p class="lead">
-            講演・後援・イベント協力・会員・入会・取材など、eスポーツに関わるご相談を受け付けています。
-            下記フォームからお気軽にお送りください。内容を確認のうえ、担当より折り返しご連絡いたします。
+            講演・後援・イベント協力・会員・取材のご相談をお聞かせください。
           </p>
         </div>
       </section>
-
       <section class="section contact-body">
         <div class="contact-grid">
           <div class="form-card">
             <p class="eyebrow">Contact Form</p>
             <h2>お問い合わせフォーム</h2>
-            <p class="form-lead">下記に入力して「送信する」を押してください。担当が確認し、順次ご返信します。（<span style="color:var(--red);font-weight:800;">*</span> は必須項目）</p>
-            <form class="native-form" action="https://script.google.com/macros/s/AKfycbzG_WbEgV6ihywAw5JXol_EaWK9qaqVOaus-to4PSnBfRuxeHs3QhpPR9fI07xUTxTERg/exec" method="post" target="contact-submit-frame">
-              <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <p class="form-lead">
+              下記に入力して「送信する」を押してください。担当が確認し、順次ご返信します。（<span
+                style="color: var(--red); font-weight: 800"
+                >*</span
+              >
+              は必須項目）
+            </p>
+            <form
+              class="native-form"
+              action="https://script.google.com/macros/s/AKfycbzG_WbEgV6ihywAw5JXol_EaWK9qaqVOaus-to4PSnBfRuxeHs3QhpPR9fI07xUTxTERg/exec"
+              method="post"
+              target="contact-submit-frame"
+            >
+              <input
+                type="text"
+                name="website"
+                class="hp"
+                tabindex="-1"
+                autocomplete="off"
+                aria-hidden="true"
+              />
               <input type="hidden" name="ts" id="form-open-ts" value="" />
-              <input type="hidden" name="requestId" id="form-request-id" value="" />
-              <noscript><p class="form-lead" style="color:var(--red);font-weight:800;">送信にはブラウザのJavaScriptを有効にしていただく必要があります。無効のままでは迷惑送信と区別できず、お問い合わせが届きません。</p></noscript>
+              <input
+                type="hidden"
+                name="requestId"
+                id="form-request-id"
+                value=""
+              />
+              <noscript
+                ><p
+                  class="form-lead"
+                  style="color: var(--red); font-weight: 800"
+                >
+                  送信にはブラウザのJavaScriptを有効にしていただく必要があります。無効のままでは迷惑送信と区別できず、お問い合わせが届きません。
+                </p></noscript
+              >
 
-              <label>お名前 <span class="req">*</span>
-                <input type="text" name="name" autocomplete="name" maxlength="100" required />
+              <label
+                >お名前 <span class="req">*</span>
+                <input
+                  type="text"
+                  name="name"
+                  autocomplete="name"
+                  maxlength="100"
+                  required
+                />
               </label>
-              <label>ご所属（会社・学校・団体名）
-                <input type="text" name="organization" autocomplete="organization" maxlength="200" />
+              <label
+                >ご所属（会社・学校・団体名）
+                <input
+                  type="text"
+                  name="organization"
+                  autocomplete="organization"
+                  maxlength="200"
+                />
               </label>
-              <label>メールアドレス <span class="req">*</span>
-                <input type="email" name="email" autocomplete="email" maxlength="254" required />
+              <label
+                >メールアドレス <span class="req">*</span>
+                <input
+                  type="email"
+                  name="email"
+                  autocomplete="email"
+                  maxlength="254"
+                  required
+                />
               </label>
-              <label>電話番号
-                <input type="tel" name="phone" autocomplete="tel" maxlength="40" />
+              <label
+                >電話番号
+                <input
+                  type="tel"
+                  name="phone"
+                  autocomplete="tel"
+                  maxlength="40"
+                />
               </label>
-              <label>お問い合わせの種類 <span class="req">*</span>
+              <label
+                >お問い合わせの種類 <span class="req">*</span>
                 <select name="category" required>
                   <option value="" disabled selected>選択してください</option>
                   <option>講演・セミナーの依頼</option>
@@ -198,47 +172,103 @@
                   <option>その他</option>
                 </select>
               </label>
-              <label>お問い合わせ内容 <span class="req">*</span>
+              <label
+                >お問い合わせ内容 <span class="req">*</span>
                 <textarea name="message" maxlength="4000" required></textarea>
               </label>
               <div class="form-submit">
                 <button type="submit" class="button primary">送信する</button>
               </div>
             </form>
-            <p class="form-lead" id="contact-form-message" role="status" aria-live="polite" hidden></p>
-            <iframe name="contact-submit-frame" title="お問い合わせ送信結果" style="display: none"></iframe>
+            <p
+              class="form-lead"
+              id="contact-form-message"
+              role="status"
+              aria-live="polite"
+              hidden
+            ></p>
+            <iframe
+              name="contact-submit-frame"
+              title="お問い合わせ送信結果"
+              style="display: none"
+            ></iframe>
           </div>
 
           <aside class="contact-routes" aria-label="その他の窓口">
             <article>
               <span>Event</span>
               <h3>イベント掲載の申込</h3>
-              <p>大阪府内で開催するeスポーツ関連イベントの掲載は、専用フォームから受け付けています。</p>
-              <a class="route-link" href="https://docs.google.com/forms/d/e/1FAIpQLSc_2q_K6ZeWMOutHOdOrIkhJy6aw8hCsNF9WSdkwaaT2NnOoQ/viewform" target="_blank" rel="noreferrer">掲載申込フォーム →</a>
+              <p>
+                大阪府内で開催するeスポーツ関連イベントの掲載は、専用フォームから受け付けています。
+              </p>
+              <a
+                class="route-link"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSc_2q_K6ZeWMOutHOdOrIkhJy6aw8hCsNF9WSdkwaaT2NnOoQ/viewform"
+                target="_blank"
+                rel="noreferrer"
+                >掲載申込フォーム →</a
+              >
             </article>
             <article>
               <span>SNS</span>
               <h3>公式X（旧Twitter）</h3>
               <p>最新の活動やイベント情報は、公式Xでも発信しています。</p>
-              <a class="route-link" href="https://x.com/OsakaGamers" target="_blank" rel="noreferrer">@OsakaGamers →</a>
+              <a
+                class="route-link"
+                href="https://x.com/OsakaGamers"
+                target="_blank"
+                rel="noreferrer"
+                >@OsakaGamers →</a
+              >
             </article>
             <article>
               <span>Docs</span>
               <h3>会員・連携のご検討</h3>
-              <p>会員参画や後援・連携をご検討の方は、会員資料もあわせてご確認ください。</p>
-              <a class="route-link" href="./assets/documents/jesu-osaka-guide.pdf" target="_blank" rel="noreferrer">会員資料を見る →</a>
+              <p>
+                会員参画や後援・連携をご検討の方は、会員資料もあわせてご確認ください。
+              </p>
+              <a
+                class="route-link"
+                href="./assets/documents/jesu-osaka-guide.pdf"
+                target="_blank"
+                rel="noreferrer"
+                >会員資料を見る →</a
+              >
             </article>
           </aside>
         </div>
       </section>
     </main>
-
     <footer class="footer">
-      <div>
-        <img src="./assets/logo.png" alt="" />
-        <p>© 一般社団法人大阪府eスポーツ連合. All rights reserved.</p>
+      <div class="footer-main">
+        <a class="brand" href="./index.html"
+          ><img
+            src="./assets/logo.png"
+            width="58"
+            height="43"
+            alt="JeSU Osaka"
+          /><span
+            ><strong>JeSU OSAKA</strong
+            ><small>一般社団法人大阪府eスポーツ連合</small></span
+          ></a
+        >
+        <nav aria-label="フッターメニュー">
+          <a href="./index.html#about">団体概要</a
+          ><a href="./index.html#members">役員紹介</a
+          ><a
+            href="./assets/documents/jesu-osaka-guide.pdf"
+            target="_blank"
+            rel="noopener"
+            >会員資料（PDF）↗</a
+          ><a href="https://x.com/OsakaGamers" target="_blank" rel="noopener"
+            >公式X ↗</a
+          ><a href="./contact.html">お問い合わせ</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <small>© Osaka esports Union. All rights reserved.</small
+        ><a href="#top">ページの先頭へ ↑</a>
       </div>
     </footer>
-    <script src="./contact-submit.js" defer></script>
   </body>
 </html>

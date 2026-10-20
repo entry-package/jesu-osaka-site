@@ -330,7 +330,7 @@ article[id] {
   width: 100%;
   height: 385px;
   object-fit: cover;
-  object-position: 50% 30%;
+  object-position: 50% 50%;
 }
 .hero-visual figcaption {
   display: flex;

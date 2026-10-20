@@ -6,6 +6,7 @@
     team: "プロチーム",
     creator: "配信者",
     public: "自治体・主要大会",
+    package: "PACkage関連",
   };
   function statusLabel(event, today) {
     const label =
@@ -65,7 +66,10 @@
     let month = (first || today).slice(0, 7);
     const months = [];
     const base = new Date(today.slice(0, 7) + "-01T00:00:00Z");
-    for (let i = 0; i < 7; i++) {
+    const lastPublished = payload.events.flatMap(e => e.dates).filter(d => d >= today).sort().at(-1);
+    const lastMonth = lastPublished ? new Date(lastPublished.slice(0,7) + "-01T00:00:00Z") : base;
+    const monthCount = Math.max(7, (lastMonth.getUTCFullYear()-base.getUTCFullYear())*12+lastMonth.getUTCMonth()-base.getUTCMonth()+1);
+    for (let i = 0; i < monthCount; i++) {
       const d = new Date(base);
       d.setUTCMonth(d.getUTCMonth() + i);
       months.push(d.toISOString().slice(0, 7));

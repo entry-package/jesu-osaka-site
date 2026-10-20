@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "policy_version": "1.1",
+  "policy_version": "1.2",
   "last_checked": "2026-10-20",
   "timezone": "Asia/Tokyo",
   "events": [
@@ -229,6 +229,164 @@
       },
       "summary": "セガ公式全国大会の近畿地方大会。2部門を実施し、各優勝者が決勝大会出場権を獲得。",
       "activity_type": "competition"
+    },
+    {
+      "id": "gamepavilion-meetup-20261103",
+      "name": "ゲームパビリオンjp 定期交流会＆もくもく会",
+      "dates": [
+        "2026-11-03"
+      ],
+      "venue": "大阪市立総合生涯学習センター",
+      "city": "大阪市北区",
+      "organizer": "ゲームパビリオンjp",
+      "official_url": "https://gamepavilion.jp/meetup/",
+      "source_url": "https://www.package-inc.com/brands/gamepavilion/",
+      "category": "package",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "source_owner": "PACkageまたは関係イベント主催者",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "package_related",
+        "evidence_url": "https://www.package-inc.com/brands/gamepavilion/"
+      },
+      "package_relation": {
+        "entity": "株式会社PACkage",
+        "role": "企画・運営",
+        "evidence_url": "https://www.package-inc.com/brands/gamepavilion/"
+      },
+      "activity_type": "meetup",
+      "summary": "ゲーム開発者同士の情報交換・制作のための交流会。PACkageが企画・運営に参画するゲームパビリオンjpの関連企画。",
+      "fee": "500円",
+      "start_time": "13:00",
+      "end_time": "17:00"
+    },
+    {
+      "id": "pacfes-vol12-2026",
+      "name": "PACFES vol.12",
+      "dates": [
+        "2026-12-05"
+      ],
+      "venue": "GALA RESORT",
+      "city": "大阪市中央区",
+      "organizer": "株式会社PACkage",
+      "official_url": "https://peatix.com/event/5118874",
+      "source_url": "https://www.package-inc.com/brands/pacfes/",
+      "category": "package",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "source_owner": "PACkageまたは関係イベント主催者",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "package_related",
+        "evidence_url": "https://www.package-inc.com/brands/pacfes/"
+      },
+      "package_relation": {
+        "entity": "株式会社PACkage",
+        "role": "主催",
+        "evidence_url": "https://www.package-inc.com/brands/pacfes/"
+      },
+      "activity_type": "festival",
+      "summary": "PACkage主催のデジタル複合フェス。ゲームと音楽を楽しむイベント。",
+      "fee": "料金・参加条件は公式案内をご確認ください"
+    },
+    {
+      "id": "paclan-10th-day26-2026",
+      "name": "PACLAN 10th｜Day 1",
+      "dates": [
+        "2026-12-26"
+      ],
+      "venue": "LINEヤフー大阪オフィス（グランフロント大阪 タワーA 37階）",
+      "city": "大阪市北区",
+      "organizer": "株式会社PACkage／会場協力・共催：LINEヤフー株式会社",
+      "official_url": "https://www.package-inc.com/blog/paclan-10th-2026/",
+      "source_url": "https://www.package-inc.com/blog/paclan-10th-2026/",
+      "category": "package",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "source_owner": "PACkageまたは関係イベント主催者",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "package_related",
+        "evidence_url": "https://www.package-inc.com/blog/paclan-10th-2026/"
+      },
+      "package_relation": {
+        "entity": "株式会社PACkage",
+        "role": "主催",
+        "evidence_url": "https://www.package-inc.com/blog/paclan-10th-2026/"
+      },
+      "activity_type": "live_gameplay",
+      "summary": "PC・ゲーム機・アナログゲームを持ち寄る交流イベント。「年末ゲーム交流会」と同時開催。",
+      "fee": "参加無料（申込方法は公式案内をご確認ください）",
+      "start_time": "13:00",
+      "end_time": "19:00",
+      "series_id": "paclan-10th"
+    },
+    {
+      "id": "paclan-10th-day27-2026",
+      "name": "PACLAN 10th｜Day 2",
+      "dates": [
+        "2026-12-27"
+      ],
+      "venue": "LINEヤフー大阪オフィス（グランフロント大阪 タワーA 37階）",
+      "city": "大阪市北区",
+      "organizer": "株式会社PACkage／会場協力・共催：LINEヤフー株式会社",
+      "official_url": "https://www.package-inc.com/blog/paclan-10th-2026/",
+      "source_url": "https://www.package-inc.com/blog/paclan-10th-2026/",
+      "category": "package",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "source_owner": "PACkageまたは関係イベント主催者",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "package_related",
+        "evidence_url": "https://www.package-inc.com/blog/paclan-10th-2026/"
+      },
+      "package_relation": {
+        "entity": "株式会社PACkage",
+        "role": "主催",
+        "evidence_url": "https://www.package-inc.com/blog/paclan-10th-2026/"
+      },
+      "activity_type": "live_gameplay",
+      "summary": "PC・ゲーム機・アナログゲームを持ち寄る交流イベント。「年末ゲーム交流会」と同時開催。",
+      "fee": "参加無料（申込方法は公式案内をご確認ください）",
+      "start_time": "10:00",
+      "end_time": "19:00",
+      "series_id": "paclan-10th"
+    },
+    {
+      "id": "gamepavilion-spring-2027",
+      "name": "ゲームパビリオンjp2027春",
+      "dates": [
+        "2027-03-13"
+      ],
+      "venue": "梅田スカイビル 3階 ステラホール",
+      "city": "大阪市北区",
+      "organizer": "ゲームパビリオンjp準備会（実行委員会）",
+      "official_url": "https://gamepavilion.jp/",
+      "source_url": "https://www.package-inc.com/brands/gamepavilion/",
+      "category": "package",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "source_owner": "PACkageまたは関係イベント主催者",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "package_related",
+        "evidence_url": "https://www.package-inc.com/brands/gamepavilion/"
+      },
+      "package_relation": {
+        "entity": "株式会社PACkage",
+        "role": "企画・運営",
+        "evidence_url": "https://www.package-inc.com/brands/gamepavilion/"
+      },
+      "activity_type": "exhibition",
+      "summary": "インディーゲームの展示・試遊イベント。実行委員会が主催し、PACkageは企画・運営に参画。",
+      "fee": "料金・参加条件は公式案内をご確認ください"
     }
   ]
 }

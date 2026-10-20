@@ -2145,3 +2145,11 @@ article[id] {
 .calendar-page-section {padding-top:0;}
 .calendar-page-section > .osaka-calendar {margin-top:0;padding-top:40px;}
 .osaka-calendar {scroll-margin-top:125px;}
+
+.report-photo {margin:40px 0;}
+.report-photo img {display:block;width:100%;height:auto;border-radius:4px;}
+.report-photo figcaption {font-size:12px;line-height:1.8;color:#666;margin-top:12px;}
+.report-topic {padding:24px 0 20px;border-bottom:1px solid #deded8;}
+.report-topic .eyebrow {margin:0 0 8px;color:#b51e2b;}
+.report-topic h3 {margin:0 0 18px;font-size:24px;line-height:1.5;}
+@media(max-width:560px){.report-photo {margin:28px 0;}.report-topic h3 {font-size:21px;}}

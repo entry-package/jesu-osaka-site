@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "effective_date": "2026-10-20",
   "cadence": "毎週月曜日 09:00 JST",
   "lookahead_days": 180,
@@ -9,7 +9,8 @@
     "publisher": "ゲームメーカー",
     "team": "プロチーム",
     "creator": "配信者",
-    "public": "自治体・主要大会"
+    "public": "自治体・主要大会",
+    "package": "PACkage関連"
   },
   "importance_kinds": [
     "jesu_official",
@@ -18,7 +19,8 @@
     "publisher_official_qualifier",
     "publisher_official_festival",
     "team_creator_major",
-    "government_supported_major"
+    "government_supported_major",
+    "package_related"
   ],
   "source_hosts": [
     "jesu.or.jp",
@@ -30,7 +32,12 @@
     "konami.com",
     "redee.co.jp",
     "mitsui-shopping-park.com",
-    "pref.osaka.lg.jp"
+    "pref.osaka.lg.jp",
+    "package-inc.com",
+    "gamepavilion.jp",
+    "pngesports.com",
+    "peatix.com",
+    "x.com"
   ],
   "major_capacity_threshold": 300,
   "publication": "提示版の確認後に公開。毎週の自動処理は公式情報調査・検証・確認版保存まで。",
@@ -38,5 +45,23 @@
     "competition",
     "spectating",
     "live_gameplay"
+  ],
+  "package_roles": [
+    "主催",
+    "共催",
+    "企画・運営",
+    "運営協力",
+    "出演"
+  ],
+  "package_activity_types": [
+    "competition",
+    "spectating",
+    "live_gameplay",
+    "meetup",
+    "seminar",
+    "festival",
+    "exhibition",
+    "performance",
+    "workshop"
   ]
 }

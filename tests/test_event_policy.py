@@ -20,6 +20,18 @@ class EventPolicyTests(unittest.TestCase):
   x=copy.deepcopy(self.data["events"][0]);x["id"]="duplicate";self.data["events"].append(x)
   with self.assertRaises(ValueError):mod.validate(self.data,self.policy)
  def test_reject_unconfirmed_large_creator_event(self):self.rejects(lambda e:e.update(category="creator",importance={"kind":"team_creator_major","evidence_url":e["official_url"]}))
+ def test_package_small_meetup_allowed(self):
+  e=copy.deepcopy(next(x for x in self.data["events"] if x["category"]=="package"));e["capacity"]=10;e["activity_type"]="meetup"
+  mod.validate({**self.data,"events":[e]},self.policy)
+ def test_package_future_announcement_not_lost_after_180_days(self):
+  e=copy.deepcopy(next(x for x in self.data["events"] if x["category"]=="package"));e["dates"]=["2028-01-01"]
+  self.assertEqual(mod.active_events({**self.data,"events":[e]},self.policy),[e])
+ def test_package_relation_is_required(self):
+  e=copy.deepcopy(next(x for x in self.data["events"] if x["category"]=="package"));e.pop("package_relation")
+  with self.assertRaises(ValueError):mod.validate({**self.data,"events":[e]},self.policy)
+ def test_external_cannot_use_package_exception(self):
+  e=copy.deepcopy(self.data["events"][0]);e["importance"]["kind"]="package_related"
+  with self.assertRaises(ValueError):mod.validate({**self.data,"events":[e]},self.policy)
  def test_no_intermediate_dates(self):
   text=mod.render(self.data,self.policy,"test-")
   self.assertIn('2026-11-07',text)

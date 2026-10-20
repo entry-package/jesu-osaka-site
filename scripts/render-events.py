@@ -15,7 +15,15 @@ def validate(data,policy):
   if not re.fullmatch(r"[a-z0-9-]+",e["id"]):errors.append("unsafe id")
   if e.get("prefecture")!="大阪府" or e.get("format")!="offline":errors.append(e["id"]+": outside Osaka / online only")
   if e.get("category") not in policy["categories"]:errors.append("unknown category")
-  if e.get("activity_type") not in policy["activity_types"]:errors.append("competition, spectating or actual gameplay required")
+  package=e.get("category")=="package"
+  if package:
+   relation=e.get("package_relation",{})
+   if relation.get("entity")!="株式会社PACkage" or relation.get("role") not in policy["package_roles"]:errors.append("missing PACkage involvement")
+   evidence=urlsplit(relation.get("evidence_url",""));host=evidence.hostname or ""
+   if evidence.scheme!="https" or not (host=="package-inc.com" or host.endswith(".package-inc.com")):errors.append("missing PACkage official relationship evidence")
+   if e.get("importance",{}).get("kind")!="package_related":errors.append("package scope requires relation basis")
+  elif e.get("importance",{}).get("kind")=="package_related":errors.append("package exception cannot qualify an external event")
+  if e.get("activity_type") not in (policy["package_activity_types"] if package else policy["activity_types"]):errors.append("activity outside listing scope")
   if e.get("status") not in ("scheduled","cancelled","postponed"):errors.append("unknown status")
   if e.get("importance",{}).get("kind") not in policy["importance_kinds"]:errors.append("missing major-event basis")
   for key in ("official_url","source_url"):
@@ -39,7 +47,7 @@ def date_label(d):
  x=dt.date.fromisoformat(d);return f'{x.month}/{x.day}（{"月火水木金土日"[x.weekday()]}）'
 def active_events(data,policy):
  today=dt.date.fromisoformat(data["last_checked"]);last=today+dt.timedelta(days=policy["lookahead_days"])
- return sorted([e for e in data["events"] if e["status"]!="postponed" and any(today<=dt.date.fromisoformat(d)<=last for d in e["dates"])],key=lambda e:next(d for d in e["dates"] if dt.date.fromisoformat(d)>=today))
+ return sorted([e for e in data["events"] if e["status"]!="postponed" and any(today<=dt.date.fromisoformat(d) and (e.get("category")=="package" or dt.date.fromisoformat(d)<=last) for d in e["dates"])],key=lambda e:next(d for d in e["dates"] if dt.date.fromisoformat(d)>=today))
 def render(data,policy,prefix):
  events=active_events(data,policy);labels=policy["categories"]
  first=events[0]["dates"][0] if events else data["last_checked"];year,month=map(int,first[:7].split("-"))
@@ -61,17 +69,20 @@ def render(data,policy,prefix):
   status="中止" if e["status"]=="cancelled" else "開催予定"
   times=(e.get("start_time") or "開始時刻未公表")+("–"+e["end_time"] if e.get("end_time") else "")
   stale=(dt.date.fromisoformat(data["last_checked"])-dt.date.fromisoformat(e["checked_at"])).days>policy["stale_after_days"]
+  relation=e.get("package_relation")
+  relation_html=('<div><dt>PACkage</dt><dd>'+escape(relation["role"])+('に参画' if relation["role"]=='企画・運営' else '')+'</dd></div>') if relation else ''
   cards.append(f'''<article class="local-event" id="{prefix}{e["id"]}" data-calendar-item="{e["id"]}">
   <div class="local-event-meta"><span class="tag neutral">{labels[e["category"]]}</span><span>{"要再確認" if stale else status}</span></div>
   <p class="local-event-date">{dates}<span>{times}</span></p><h3>{escape(e["name"])}</h3>
   <p>{escape(e["summary"])}</p><dl><div><dt>会場</dt><dd>{escape(e["venue"])}（{escape(e["city"])}）</dd></div>
-  <div><dt>主催</dt><dd>{escape(e["organizer"])}</dd></div><div><dt>参加</dt><dd>{escape(e["fee"])}</dd></div></dl>
+  <div><dt>主催</dt><dd>{escape(e["organizer"])}</dd></div>{relation_html}<div><dt>参加</dt><dd>{escape(e["fee"])}</dd></div></dl>
   <div class="local-event-footer"><a class="text-link" href="{escape(e["official_url"])}" target="_blank" rel="noopener">公式サイトで確認 ↗</a><small>情報確認 {e["checked_at"].replace("-",".")}</small></div></article>''')
  payload=json.dumps({"events":events},ensure_ascii=False).replace("</","<\\/")
  options=''.join(f'<option value="{k}">{v}</option>' for k,v in labels.items())
  return f'''<section class="osaka-calendar" id="osaka-events" data-osaka-calendar data-calendar-prefix="{prefix}">
  <div class="section-heading"><div><p class="eyebrow">OSAKA EVENT CALENDAR</p><h2>府内のイベント予定</h2></div><a class="text-link" href="./event-guidelines.html">掲載基準 ↗</a></div>
- <p class="calendar-intro">大阪で出会える、ゲームとeスポーツの大きな舞台。<br>JeSU関連、ゲームメーカー、プロチーム・配信者などの公式発表からご紹介します。</p>
+ <p class="calendar-intro">大阪で出会える、ゲームとeスポーツの大きな舞台。<br>JeSU関連、ゲームメーカー、プロチーム・配信者の主要イベントと、PACkage関連イベントを公式発表からご紹介します。</p>
+ <p class="calendar-note">PACkageの主催・共催・企画運営・運営協力・出演が確認できる大阪開催のイベントは、規模・ジャンルを問わず掲載します。</p>
  <p class="calendar-note">外部イベントは各主催者による開催です。最新の日程・参加条件は公式サイトをご確認ください。</p>
  <div class="calendar-toolbar" data-calendar-controls hidden><div class="calendar-month-control"><button type="button" data-calendar-prev aria-label="前の月">←</button><label>表示月<select data-calendar-month aria-label="表示する月"></select></label><button type="button" data-calendar-next aria-label="次の月">→</button></div>
  <label class="calendar-category">種別<select data-calendar-category aria-label="イベントの種別"><option value="">すべて</option>{options}</select></label></div>

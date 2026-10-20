@@ -2141,3 +2141,7 @@ article[id] {
     font-size: 22px;
   }
 }
+
+.calendar-page-section {padding-top:0;}
+.calendar-page-section > .osaka-calendar {margin-top:0;padding-top:40px;}
+.osaka-calendar {scroll-margin-top:125px;}

@@ -69,13 +69,11 @@ def render(data,policy,prefix):
   status="中止" if e["status"]=="cancelled" else "開催予定"
   times=(e.get("start_time") or "開始時刻未公表")+("–"+e["end_time"] if e.get("end_time") else "")
   stale=(dt.date.fromisoformat(data["last_checked"])-dt.date.fromisoformat(e["checked_at"])).days>policy["stale_after_days"]
-  relation=e.get("package_relation")
-  relation_html=('<div><dt>PACkage</dt><dd>'+escape(relation["role"])+('に参画' if relation["role"]=='企画・運営' else '')+'</dd></div>') if relation else ''
   cards.append(f'''<article class="local-event" id="{prefix}{e["id"]}" data-calendar-item="{e["id"]}">
   <div class="local-event-meta"><span class="tag neutral">{labels[e["category"]]}</span><span>{"要再確認" if stale else status}</span></div>
   <p class="local-event-date">{dates}<span>{times}</span></p><h3>{escape(e["name"])}</h3>
   <p>{escape(e["summary"])}</p><dl><div><dt>会場</dt><dd>{escape(e["venue"])}（{escape(e["city"])}）</dd></div>
-  <div><dt>主催</dt><dd>{escape(e["organizer"])}</dd></div>{relation_html}<div><dt>参加</dt><dd>{escape(e["fee"])}</dd></div></dl>
+  <div><dt>主催</dt><dd>{escape(e["organizer"])}</dd></div><div><dt>参加</dt><dd>{escape(e["fee"])}</dd></div></dl>
   <div class="local-event-footer"><a class="text-link" href="{escape(e["official_url"])}" target="_blank" rel="noopener">公式サイトで確認 ↗</a><small>情報確認 {e["checked_at"].replace("-",".")}</small></div></article>''')
  payload=json.dumps({"events":events},ensure_ascii=False).replace("</","<\\/")
  options=''.join(f'<option value="{k}">{v}</option>' for k,v in labels.items())

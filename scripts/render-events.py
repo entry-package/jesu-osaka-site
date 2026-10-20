@@ -15,6 +15,7 @@ def validate(data,policy):
   if not re.fullmatch(r"[a-z0-9-]+",e["id"]):errors.append("unsafe id")
   if e.get("prefecture")!="大阪府" or e.get("format")!="offline":errors.append(e["id"]+": outside Osaka / online only")
   if e.get("category") not in policy["categories"]:errors.append("unknown category")
+  if e.get("activity_type") not in policy["activity_types"]:errors.append("competition, spectating or actual gameplay required")
   if e.get("status") not in ("scheduled","cancelled","postponed"):errors.append("unknown status")
   if e.get("importance",{}).get("kind") not in policy["importance_kinds"]:errors.append("missing major-event basis")
   for key in ("official_url","source_url"):

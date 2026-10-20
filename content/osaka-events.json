@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "policy_version": "1.0",
+  "policy_version": "1.1",
   "last_checked": "2026-10-20",
   "timezone": "Asia/Tokyo",
   "events": [
@@ -30,7 +30,8 @@
         "kind": "government_supported_major",
         "evidence_url": "https://www.pref.osaka.lg.jp/o070080/e-sports_hojokin.html"
       },
-      "summary": "大阪府の大規模eスポーツ大会開催支援の対象大会。和泉会場で予選を開催。"
+      "summary": "大阪府の大規模eスポーツ大会開催支援の対象大会。和泉会場で予選を開催。",
+      "activity_type": "competition"
     },
     {
       "id": "lalaport-kadoma-qualifier-2026",
@@ -58,7 +59,8 @@
         "kind": "government_supported_major",
         "evidence_url": "https://www.pref.osaka.lg.jp/o070080/e-sports_hojokin.html"
       },
-      "summary": "大阪府の大規模eスポーツ大会開催支援の対象大会。門真会場で予選を開催。"
+      "summary": "大阪府の大規模eスポーツ大会開催支援の対象大会。門真会場で予選を開催。",
+      "activity_type": "competition"
     },
     {
       "id": "lalaport-student-2026",
@@ -85,7 +87,8 @@
         "kind": "government_supported_major",
         "evidence_url": "https://www.pref.osaka.lg.jp/o070080/e-sports_hojokin.html"
       },
-      "summary": "高校生・大学生を対象にしたストリートファイター6の大会。"
+      "summary": "高校生・大学生を対象にしたストリートファイター6の大会。",
+      "activity_type": "competition"
     },
     {
       "id": "lalaport-final-2026",
@@ -112,7 +115,8 @@
         "kind": "government_supported_major",
         "evidence_url": "https://www.pref.osaka.lg.jp/o070080/e-sports_hojokin.html"
       },
-      "summary": "各予選を通過した参加者が集う決勝ラウンド・グランドファイナル。"
+      "summary": "各予選を通過した参加者が集う決勝ラウンド・グランドファイナル。",
+      "activity_type": "competition"
     },
     {
       "id": "prospi-fanfesta-osaka-2026",
@@ -139,7 +143,92 @@
         "kind": "publisher_national_final",
         "evidence_url": "https://www.konami.com/games/prospi_a/fanfesta/2026/osaka/"
       },
-      "summary": "プロスピAリーグ日本一決定戦などを実施予定のメーカー公式ファンイベント。"
+      "summary": "プロスピAリーグ日本一決定戦などを実施予定のメーカー公式ファンイベント。",
+      "activity_type": "competition"
+    },
+    {
+      "id": "blast-r6-osaka-major-2026",
+      "series_id": "blast-r6-major-2026",
+      "name": "BLAST R6 OSAKA MAJOR 2026",
+      "organizer": "Ubisoft / BLAST",
+      "category": "publisher",
+      "city": "大阪市住之江区",
+      "venue": "ATCホール",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "dates": [
+        "2026-11-13",
+        "2026-11-14",
+        "2026-11-15"
+      ],
+      "fee": "有料（一般4,500円から／3日通し11,000円）",
+      "official_url": "https://www.ubisoft.com/ja-jp/esports/rainbow-six/siege/news-updates/bgHjRmr9Bh5q6vjXkI2cd/blast-r6-osaka-major---",
+      "source_url": "https://www.ubisoft.com/ja-jp/esports/rainbow-six/siege/competition/513",
+      "source_owner": "ゲームメーカー Ubisoft / BLAST R6 Esports",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "publisher_international_major",
+        "evidence_url": "https://www.ubisoft.com/ja-jp/esports/rainbow-six/siege/news-updates/bgHjRmr9Bh5q6vjXkI2cd/blast-r6-osaka-major---"
+      },
+      "summary": "世界のトップチームが賞金総額60万ドルとSix Invitational 2027出場権を争う国際公式大会。",
+      "activity_type": "competition"
+    },
+    {
+      "id": "monster-hunter-now-carnival-osaka-2026",
+      "series_id": "monster-hunter-now-carnival-2026",
+      "name": "モンスターハンターNow カーニバル 2026：大阪",
+      "organizer": "Scopely Explore（カプコン協力）",
+      "category": "publisher",
+      "city": "大阪市中央区・浪速区",
+      "venue": "なんば周辺の指定イベントエリア",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "dates": [
+        "2026-11-14",
+        "2026-11-15"
+      ],
+      "start_time": "09:00",
+      "end_time": "18:00",
+      "fee": "1日券4,000円／2日券5,000円（税込）",
+      "official_url": "https://monsterhunternow.com/mhn-carnival-2026-osaka",
+      "source_url": "https://www.capcom.co.jp/ir/news/html/260901.html",
+      "source_owner": "運営 Scopely Explore / 協力 CAPCOM",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "publisher_official_festival",
+        "evidence_url": "https://monsterhunternow.com/mhn-carnival-2026-osaka"
+      },
+      "summary": "なんばの街を巡って特別な狩猟・探索を楽しむ、メーカー協力の有料リアルゲームイベント。",
+      "activity_type": "live_gameplay"
+    },
+    {
+      "id": "initial-d-saikyo-4th-kinki-2027",
+      "series_id": "initial-d-saikyo-4th",
+      "name": "頭文字D THE ARCADE 公道最強決定戦 4th｜近畿大会",
+      "organizer": "セガ フェイブ",
+      "category": "publisher",
+      "city": "大阪市中央区",
+      "venue": "オービックホール ホールA～C",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "dates": [
+        "2027-01-16"
+      ],
+      "start_time": "10:00",
+      "fee": "参加条件・申込方法は公式案内をご確認ください",
+      "official_url": "https://initiald.sega.jp/inidac/event/saikyo4th/regional-preliminaries/area7/",
+      "source_url": "https://initiald.sega.jp/inidac/event/saikyo4th/regional-preliminaries/",
+      "source_owner": "ゲームメーカー SEGA",
+      "checked_at": "2026-10-20",
+      "status": "scheduled",
+      "importance": {
+        "kind": "publisher_official_qualifier",
+        "evidence_url": "https://initiald.sega.jp/inidac/event/saikyo4th/regional-preliminaries/area7/"
+      },
+      "summary": "セガ公式全国大会の近畿地方大会。2部門を実施し、各優勝者が決勝大会出場権を獲得。",
+      "activity_type": "competition"
     }
   ]
 }

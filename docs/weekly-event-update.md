@@ -20,3 +20,19 @@
 カレンダー紹介文は「大阪で出会える、ゲームとeスポーツの大きな舞台。」「JeSU関連、ゲームメーカー、プロチーム・配信者の主要イベントやフォームからご登録いただいたイベント等を公式発表からご紹介します。」とする。PACkageの関係区分・全件掲載の説明段落は表示しない。末尾の外部主催者・公式サイト確認の案内は維持。掲載判定やイベントデータの基準は変更しない（社長の文言差し替え指示）。
 
 掲載漏れ防止: 検索エンジンの結果・旧記事・カレンダーの空表示だけで不存在と判定しない。PACkage公式Xの最新告知、公式Peatixグループの公開予定、既存案件台帳の開催月を突合し、候補ごとに会場の公式トップ→現在のイベント詳細へ進む。スパワールドは公式ハロウィン等の季節ページ内のゲーム体験枠も読む。サイト内の無関係なリンクや改変が疑われる内容は根拠にせず、当該イベント本文と会社公式告知で照合。定期イベントの過去年日付を流用しない。PACkage関係根拠は会社公式ドメインか確認済み公式X PACkage_2018 の固定ポストURLを用いる。他アカウント・検索URL・プロフィールURLだけでは根拠としない。Peatix公開ページの開催時間・料金も確認し、出展料・オプション・ドリンク代と一般入場料を区別する。
+
+## 2026-10-21 週次実装の追記
+
+自然起動の観測がある回だけ通常のprepare-weekly.pyを使い、それ以外はprepare-weekly.py --manualを使う。手動はmanual-日時の別キーとなり、将来の週次キーを消費しない。既存作業場を再利用するときは最初のbase_shaを保持する。
+
+research.jsonには機械検証用にschema_version=1、discovery、sourcesを含める。discoveryはpackage / jesu / publishers / teams_creators / submissionsの5つを実際に探索した場合だけtrue。sourcesは全イベントのevent_id、official_urlと同じurl、status（verifiedまたはunavailable）、observed_at（当日JSTのISO8601）を持つ。将来イベントを削除する場合も旧IDと公式URLの当日の確認根拠が必要。取得不能を成功と書かない。checked_atとlast_checkedは実際に確認できた範囲だけ更新する。
+
+調査後に実行：
+python3 /Users/yukuno/.local/share/jesu-osaka/repo/scripts/weekly-release.py stage --worktree <worktree> --research <run>/research.json --output <run>/frozen
+python3 /Users/yukuno/.local/share/jesu-osaka/repo/scripts/weekly-release.py publish --candidate <run>/frozen --dry-run
+
+frozenには本番・テスト両成果物とcandidate.json、research.jsonを保存する。確認用offline HTMLとZIPを作り、従来どおりDrive保存・再取得照合する。
+
+公開はdocs/weekly-publication-proposal.mdと現在の正本に従う。現在ゲートはenabled=falseなのでdry-runで終了し公開しない。社長の直接OKが正本へ反映され、カレンダー限定ゲートが有効になった場合だけpublish（--dry-runなし）へ進む。旧手順6/9の公開禁止に対する例外は、その直接承認がある場合のカレンダー欄に限る。自分で正本・ゲート・承認を変更しない。
+
+公開後はpublication.jsonへ実コミットと照合結果を記録する。source_imported=falseなら次回公開を進めず編集元を照合する。publication-started.jsonがある失敗回は自動再送せず、現状を先に確認する。

@@ -3,7 +3,7 @@
   "id": "jesu-osaka-events-weekly",
   "actor": "codex",
   "scope": "company",
-  "prompt": "JeSU大阪サイトの府内イベント予定を週次更新する。/Users/yukuno/.local/share/jesu-osaka/repo/docs/weekly-event-update.md に従い、公式情報調査から専用worktreeでの更新・検証・既存共有Driveへの確認版保存・読戻し・Notionの確認待ち記録まで実行する。実装だけや設定だけで終わらず、可能な工程を完遂する。外部公開・push・送信はしない。今回が定刻外なら手動検証として実行する。",
+  "prompt": "JeSU大阪の府内イベント予定を毎週更新する。/Users/yukuno/.local/share/jesu-osaka/repo/docs/weekly-event-update.md と docs/weekly-publication-proposal.md に従い、公式情報の調査、専用worktree更新、機械検証、frozen成果物、既存共有Drive保存と再取得照合、Notion記録まで実行。定刻外はprepare-weekly.py --manual。公開ゲートが無効ならpublish --dry-runで終了し、公開・push・送信をしない。社長の直接OKが正本へ反映され、カレンダー限定ゲートが有効な場合だけ、テスト公開・照合・本番公開・照合まで進める。自分でゲート、正本、承認記録を変更しない。競合・取得不能・検証失敗を正常更新と扱わず記録する。",
   "model": null,
   "reasoning_effort": null,
   "cwds": [

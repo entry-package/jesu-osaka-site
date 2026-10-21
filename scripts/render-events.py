@@ -59,7 +59,7 @@ def render(data,policy,prefix):
  for e in events:
   for d in e["dates"]:byday.setdefault(d,[]).append(e)
  rows=[]
- for week in calendar.Calendar(0).monthdayscalendar(year,month):
+ for week in calendar.Calendar(6).monthdayscalendar(year,month):
   cells=[]
   for day in week:
    if not day:cells.append('<td class="calendar-blank"></td>');continue
@@ -91,7 +91,7 @@ def render(data,policy,prefix):
  <div class="calendar-toolbar" data-calendar-controls hidden><div class="calendar-month-control"><button type="button" data-calendar-prev aria-label="前の月">←</button><label>表示月<select data-calendar-month aria-label="表示する月"></select></label><button type="button" data-calendar-next aria-label="次の月">→</button></div>
  <label class="calendar-category">種別<select data-calendar-category aria-label="イベントの種別"><option value="">すべて</option>{options}</select></label></div>
  <nav class="calendar-month-tabs" aria-label="月別のイベント" data-calendar-tabs data-calendar-controls hidden></nav>
- <div class="calendar-layout"><div class="calendar-table-wrap"><table class="calendar-table"><caption data-calendar-caption>{year}年{month}月 府内のイベント予定</caption><thead><tr>{''.join('<th scope="col">'+x+'</th>' for x in '月火水木金土日')}</tr></thead><tbody data-calendar-body>{''.join(rows)}</tbody></table><p class="calendar-legend">● 開催予定　× 中止　日付の印から詳細へ</p><p class="calendar-updated">情報確認：{data["last_checked"].replace("-",".")} ／ 毎週更新</p></div>
+ <div class="calendar-layout"><div class="calendar-table-wrap"><table class="calendar-table"><caption data-calendar-caption>{year}年{month}月 府内のイベント予定</caption><thead><tr>{''.join('<th scope="col">'+x+'</th>' for x in '日月火水木金土')}</tr></thead><tbody data-calendar-body>{''.join(rows)}</tbody></table><p class="calendar-legend">● 開催予定　× 中止　日付の印から詳細へ</p><p class="calendar-updated">情報確認：{data["last_checked"].replace("-",".")} ／ 毎週更新</p></div>
  <div class="local-event-list"><label class="calendar-list-scope" data-calendar-controls hidden>一覧の表示<select data-calendar-scope aria-label="予定一覧の表示範囲"><option value="all">これからの予定（全月）</option><option value="month">カレンダーの月のみ</option></select></label><p class="calendar-count" data-calendar-count role="status">{len(events)}件のイベント</p>{''.join(cards)}<p class="calendar-empty" data-calendar-empty hidden>選択した条件の掲載予定はありません。ほかの月・種別もご覧ください。</p></div></div>
  <noscript><p>JavaScriptが無効な場合は、上記カレンダーと日程順の一覧をご利用ください。</p></noscript>
  <script type="application/json" data-calendar-data>{payload}</script></section>'''

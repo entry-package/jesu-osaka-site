@@ -99,7 +99,7 @@
       root.querySelector("[data-calendar-empty]").hidden = visibleIds.size > 0;
       const [year, m] = month.split("-").map(Number);
       const start = new Date(Date.UTC(year, m - 1, 1));
-      const offset = (start.getUTCDay() + 6) % 7;
+      const offset = start.getUTCDay();
       const days = new Date(Date.UTC(year, m, 0)).getUTCDate();
       const body = root.querySelector("[data-calendar-body]");
       body.replaceChildren();

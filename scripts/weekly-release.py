@@ -130,7 +130,7 @@ def stage(work, research_path, output):
         "policy_sha256":sha(policy_bytes), "research_sha256":sha((output/"research.json").read_bytes()),
         "production":after, "preview":manifest(prev), "changed_files":changed_release,
         "data_sha256":sha((work/"content/osaka-events.json").read_bytes()),
-        "publication":"pending_owner_authorization"})
+        "publication":"pending_owner_authorization", "test_fixture":read(research_path).get("test_fixture",False)})
     return read(output/"candidate.json")
 def verify_candidate(folder):
     c = read(folder/"candidate.json")
@@ -170,6 +170,7 @@ def verify_candidate(folder):
         elif name.endswith(".html"):
             prod=prod.replace(b'content="index,follow"',b'content="noindex,nofollow"').replace(b'content="noindex,follow"',b'content="noindex,nofollow"')
         if prod != (folder/"preview"/name).read_bytes(): raise ValueError("preview differs from production")
+    if c.get("test_fixture",False) != read(folder/"research.json").get("test_fixture",False): raise ValueError("fixture marker mismatch")
     data=read(work/"content/osaka-events.json")
     verified_research(data,read(folder/"research.json"),dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date().isoformat(),json.loads(git("show",c["source_base"]+":content/osaka-events.json")))
     return c
@@ -224,6 +225,7 @@ def publish(folder, dry_run=False):
         c=verify_candidate(folder)
         policy=read(POLICY)
         if dry_run:return {"valid":True,"changed_files":c["changed_files"],"publication_enabled":enabled(policy),"dry_run":True}
+        if c.get("test_fixture"):raise PermissionError("test fixtures cannot be published")
         if not enabled(policy):raise PermissionError("weekly publication requires explicit standing authorization; no public mutation")
         if not c["changed_files"]:return {"publication":"no_change","candidate":c["id"]}
         if (folder/"publication-started.json").exists():raise ValueError("publication previously started; reconcile before retry")

@@ -15,7 +15,7 @@ def validate(data,policy):
   if not re.fullmatch(r"[a-z0-9-]+",e["id"]):errors.append("unsafe id")
   if e.get("prefecture")!="大阪府" or e.get("format")!="offline":errors.append(e["id"]+": outside Osaka / online only")
   if e.get("category") not in policy["categories"]:errors.append("unknown category")
-  package=e.get("category")=="package"
+  package=e.get("category")=="corporate" and e.get("importance",{}).get("kind")=="package_related"
   if package:
    relation=e.get("package_relation",{})
    if relation.get("entity")!="株式会社PACkage" or relation.get("role") not in policy["package_roles"]:errors.append("missing PACkage involvement")
@@ -51,7 +51,7 @@ def date_label(d):
  x=dt.date.fromisoformat(d);return f'{x.month}/{x.day}（{"月火水木金土日"[x.weekday()]}）'
 def active_events(data,policy):
  today=dt.date.fromisoformat(data["last_checked"]);last=today+dt.timedelta(days=policy["lookahead_days"])
- return sorted([e for e in data["events"] if e["status"]!="postponed" and any(today<=dt.date.fromisoformat(d) and (e.get("category")=="package" or dt.date.fromisoformat(d)<=last) for d in e["dates"])],key=lambda e:next(d for d in e["dates"] if dt.date.fromisoformat(d)>=today))
+ return sorted([e for e in data["events"] if e["status"]!="postponed" and any(today<=dt.date.fromisoformat(d) and (e.get("category")=="corporate" and e.get("importance",{}).get("kind")=="package_related" or dt.date.fromisoformat(d)<=last) for d in e["dates"])],key=lambda e:next(d for d in e["dates"] if dt.date.fromisoformat(d)>=today))
 def render(data,policy,prefix):
  events=active_events(data,policy);labels=policy["categories"]
  year,month=map(int,data["last_checked"][:7].split("-"))

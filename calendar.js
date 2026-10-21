@@ -6,7 +6,7 @@
     team: "プロチーム",
     creator: "配信者",
     public: "自治体・主要大会",
-    package: "PACkage関連",
+    corporate: "企業主催",
   };
   function statusLabel(event, today) {
     const label =

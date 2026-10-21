@@ -4,7 +4,7 @@
 
 1. /Users/yukuno/.local/share/jesu-osaka/repo/docs/event-listing-guidelines.md と content/event-policy.json を読む。今回の時刻はJSTで計算する。
 2. python3 /Users/yukuno/.local/share/jesu-osaka/repo/scripts/prepare-weekly.py を実行し、返されたworktreeとoutputだけを編集先にする。現在作業中の元repoを書き換えない。既に同日成果物が検証済みならID・ハッシュの読戻しをし、重複作成しない。
-3. 最初にPACkage関連の全件確認を行う。PACkage公式のevents/archive/brands、PACFES/PACLAN/PAC CUP、ゲームパビリオンjpのmeetupと本開催、OsakaPNGとPACsの公開告知、公開可能な案件台帳を照合する。大阪府内の主催・共催・企画運営・運営協力・出演は規模・ジャンル不問でcategory=packageへ。日時が異なる日は別枠にし、JeSU自社開催予定との重複を避ける。内部の未公表案件は候補台帳に保持し公開しない。一般枠では対戦・観戦・実際のゲームプレイ参加を主目的とするものを掲載する。展示・映像・ライド主体の催事をゲーム原作という理由だけで含めない。activity_typeと根拠を記録する。現在のブラウズ／MCP Web検索の機能を確認し、今後180日の大阪府内の主要イベントを公式発表から調査する。既存掲載の公式URLを全件開き、日付・会場・主催・中止／延期・申込先を確認する。JeSU、メーカー（KONAMI、CAPCOM、SEGA、Nintendo、Riot等）、主要プロチーム（REJECT、ZETA DIVISION、Crazy Raccoon等）、配信者本人／運営の公式サイト、府の大規模大会支援情報を探索元とする。見つからない種別を埋めるための架空掲載をしない。
+3. 最初にPACkage関連の全件確認を行う。PACkage公式のevents/archive/brands、PACFES/PACLAN/PAC CUP、ゲームパビリオンjpのmeetupと本開催、OsakaPNGとPACsの公開告知、公開可能な案件台帳を照合する。大阪府内の主催・共催・企画運営・運営協力・出演は規模・ジャンル不問でcategory=corporate（表示名「企業主催」）へ。日時が異なる日は別枠にし、JeSU自社開催予定との重複を避ける。内部の未公表案件は候補台帳に保持し公開しない。一般枠では対戦・観戦・実際のゲームプレイ参加を主目的とするものを掲載する。展示・映像・ライド主体の催事をゲーム原作という理由だけで含めない。activity_typeと根拠を記録する。現在のブラウズ／MCP Web検索の機能を確認し、今後180日の大阪府内の主要イベントを公式発表から調査する。既存掲載の公式URLを全件開き、日付・会場・主催・中止／延期・申込先を確認する。JeSU、メーカー（KONAMI、CAPCOM、SEGA、Nintendo、Riot等）、主要プロチーム（REJECT、ZETA DIVISION、Crazy Raccoon等）、配信者本人／運営の公式サイト、府の大規模大会支援情報を探索元とする。見つからない種別を埋めるための架空掲載をしない。
 4. PACkage関連は公式な関係根拠と当該日程、一般枠は主催者と公式URL・府内会場・大型根拠が揃ったものだけをcontent/osaka-events.jsonに入れる。公式ドメインが新規なら運営関係を確認してpolicyのsource_hostsへ追加し、根拠を週次記録へ。source_hosts追加だけで掲載可にはしない。日時が実際に確認できたイベントだけchecked_atを更新。取得不能は終了・中止と推測せず保持。前回と変わらなくても実際に全件再確認できた場合だけlast_checkedを当日に更新する。
 5. 新規・変更・終了・見送り・取得不能をoutputの隣のresearch.jsonに記録（URL・観測日時・判定理由・担当のみ、記事本文転載や個人データ不要）。オンライン限定と府外は除外。行政支援対象は公式大会サイトと府の支援ページを両方確認。媒体のまとめだけを根拠にしない。
 6. worktreeで python3 scripts/render-events.py、python3 -m unittest discover -s tests -p test_event_policy.py、node --test test/*.test.cjs を実行。その後 python3 scripts/build.py --preview --output <output>/preview、python3 scripts/validate.py <output>/preview --preview、python3 scripts/export-review.py <output>/preview <output>/offline を実行。report本文と写真は変更しない。ローカルGitコミットは可、fetchが必要ならread-onlyの公式gh／gitで確認し、公開は下記の限定承認とweekly-release.pyを通す場合に限る。
@@ -40,3 +40,9 @@ frozenには本番・テスト両成果物とcandidate.json、research.jsonを�
 ## SNS制作への受け渡し（2026-10-21 社長直接依頼）
 
 カレンダーの本番公開と全件照合、source_imported=trueを確認した後（変更なしなら本番欄と編集元の一致確認後）、docs/calendar-sns.mdに従い、python3 /Users/yukuno/.local/share/jesu-osaka/repo/scripts/queue-calendar-sns.py --output <run>/sns-intake.json を実行する。既存mascot-editorial/inboxへJeSU大阪X向け事実パックを渡し、同じ週・内容を重複作成しない。SNS受け渡し失敗は本番サイトの正常更新と区別して記録・再開する。未公開候補や合成データは渡さない。SNSは本人の版ごとの承認が必要。受信箱登録を投稿済みと書かない。既存x-weekly-draftsが日次に処理するが、週次実行自身も実際の原稿・未チェックの媒体別承認行への到達を確認し、未処理なら現行人格と公式情報を確認して現行SNSスキルのslot-inventory取得と既存campaign_pipeline prepare-batch --slot-inventory / sheet-prepend経由で登録する。新規の外部送信はしない。
+
+## 主催区分の整理（2026-10-21 社長直接修正）
+
+公開カテゴリ「PACkage関連」は廃止し「企業主催」（category=corporate）に統合する。既存のPACkage関係6件とREDEE主催4件は企業主催へ。REDEEは行政の支援対象であっても主催者を基準に分類し、publicへ戻さない。ゲームメーカー・プロチーム・配信者・JeSUの専用区分は維持。掲載の可否と主催区分を分離し、package_relatedとpackage_relationは内部の従来の掲載条件の検証にだけ使う。企業主催全体へPACkageの小規模・180日超の例外を広げない。
+
+カレンダーの週は日曜始まり（日・月・火・水・木・金・土）。日曜を左端の赤、土曜を右端の青とし、静的HTMLとJavaScriptによる月切替の両方で同じ日付配置を維持する（社長直接指示）。日付ラベルの曜日計算は表示列の並びと混同しない。

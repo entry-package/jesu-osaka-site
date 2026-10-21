@@ -28,19 +28,19 @@ class EventPolicyTests(unittest.TestCase):
   with self.assertRaises(ValueError):mod.validate(self.data,self.policy)
  def test_reject_unconfirmed_large_creator_event(self):self.rejects(lambda e:e.update(category="creator",importance={"kind":"team_creator_major","evidence_url":e["official_url"]}))
  def test_package_small_meetup_allowed(self):
-  e=copy.deepcopy(next(x for x in self.data["events"] if x["category"]=="package"));e["capacity"]=10;e["activity_type"]="meetup"
+  e=copy.deepcopy(next(x for x in self.data["events"] if x.get("importance",{}).get("kind")=="package_related"));e["capacity"]=10;e["activity_type"]="meetup"
   mod.validate({**self.data,"events":[e]},self.policy)
  def test_package_future_announcement_not_lost_after_180_days(self):
-  e=copy.deepcopy(next(x for x in self.data["events"] if x["category"]=="package"));e["dates"]=["2028-01-01"]
+  e=copy.deepcopy(next(x for x in self.data["events"] if x.get("importance",{}).get("kind")=="package_related"));e["dates"]=["2028-01-01"]
   self.assertEqual(mod.active_events({**self.data,"events":[e]},self.policy),[e])
  def test_official_package_post_can_confirm_relation(self):
-  e=copy.deepcopy(next(x for x in self.data["events"] if x["category"]=="package"));e["package_relation"]["evidence_url"]="https://x.com/PACkage_2018/status/2112455182881833371"
+  e=copy.deepcopy(next(x for x in self.data["events"] if x.get("importance",{}).get("kind")=="package_related"));e["package_relation"]["evidence_url"]="https://x.com/PACkage_2018/status/2112455182881833371"
   mod.validate({**self.data,"events":[e]},self.policy)
  def test_other_accounts_cannot_confirm_package_relation(self):
-  e=copy.deepcopy(next(x for x in self.data["events"] if x["category"]=="package"));e["package_relation"]["evidence_url"]="https://x.com/another_account/status/2112455182881833371"
+  e=copy.deepcopy(next(x for x in self.data["events"] if x.get("importance",{}).get("kind")=="package_related"));e["package_relation"]["evidence_url"]="https://x.com/another_account/status/2112455182881833371"
   with self.assertRaises(ValueError):mod.validate({**self.data,"events":[e]},self.policy)
  def test_package_relation_is_required(self):
-  e=copy.deepcopy(next(x for x in self.data["events"] if x["category"]=="package"));e.pop("package_relation")
+  e=copy.deepcopy(next(x for x in self.data["events"] if x.get("importance",{}).get("kind")=="package_related"));e.pop("package_relation")
   with self.assertRaises(ValueError):mod.validate({**self.data,"events":[e]},self.policy)
  def test_external_cannot_use_package_exception(self):
   e=copy.deepcopy(self.data["events"][0]);e["importance"]["kind"]="package_related"

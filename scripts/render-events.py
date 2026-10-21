@@ -15,7 +15,7 @@ def validate(data,policy):
   if not re.fullmatch(r"[a-z0-9-]+",e["id"]):errors.append("unsafe id")
   if e.get("prefecture")!="大阪府" or e.get("format")!="offline":errors.append(e["id"]+": outside Osaka / online only")
   if e.get("category") not in policy["categories"]:errors.append("unknown category")
-  package=e.get("category")=="package"
+  package=e.get("category")=="corporate" and e.get("importance",{}).get("kind")=="package_related"
   if package:
    relation=e.get("package_relation",{})
    if relation.get("entity")!="株式会社PACkage" or relation.get("role") not in policy["package_roles"]:errors.append("missing PACkage involvement")
@@ -51,7 +51,7 @@ def date_label(d):
  x=dt.date.fromisoformat(d);return f'{x.month}/{x.day}（{"月火水木金土日"[x.weekday()]}）'
 def active_events(data,policy):
  today=dt.date.fromisoformat(data["last_checked"]);last=today+dt.timedelta(days=policy["lookahead_days"])
- return sorted([e for e in data["events"] if e["status"]!="postponed" and any(today<=dt.date.fromisoformat(d) and (e.get("category")=="package" or dt.date.fromisoformat(d)<=last) for d in e["dates"])],key=lambda e:next(d for d in e["dates"] if dt.date.fromisoformat(d)>=today))
+ return sorted([e for e in data["events"] if e["status"]!="postponed" and any(today<=dt.date.fromisoformat(d) and (e.get("category")=="corporate" and e.get("importance",{}).get("kind")=="package_related" or dt.date.fromisoformat(d)<=last) for d in e["dates"])],key=lambda e:next(d for d in e["dates"] if dt.date.fromisoformat(d)>=today))
 def render(data,policy,prefix):
  events=active_events(data,policy);labels=policy["categories"]
  year,month=map(int,data["last_checked"][:7].split("-"))
@@ -59,7 +59,7 @@ def render(data,policy,prefix):
  for e in events:
   for d in e["dates"]:byday.setdefault(d,[]).append(e)
  rows=[]
- for week in calendar.Calendar(0).monthdayscalendar(year,month):
+ for week in calendar.Calendar(6).monthdayscalendar(year,month):
   cells=[]
   for day in week:
    if not day:cells.append('<td class="calendar-blank"></td>');continue
@@ -91,7 +91,7 @@ def render(data,policy,prefix):
  <div class="calendar-toolbar" data-calendar-controls hidden><div class="calendar-month-control"><button type="button" data-calendar-prev aria-label="前の月">←</button><label>表示月<select data-calendar-month aria-label="表示する月"></select></label><button type="button" data-calendar-next aria-label="次の月">→</button></div>
  <label class="calendar-category">種別<select data-calendar-category aria-label="イベントの種別"><option value="">すべて</option>{options}</select></label></div>
  <nav class="calendar-month-tabs" aria-label="月別のイベント" data-calendar-tabs data-calendar-controls hidden></nav>
- <div class="calendar-layout"><div class="calendar-table-wrap"><table class="calendar-table"><caption data-calendar-caption>{year}年{month}月 府内のイベント予定</caption><thead><tr>{''.join('<th scope="col">'+x+'</th>' for x in '月火水木金土日')}</tr></thead><tbody data-calendar-body>{''.join(rows)}</tbody></table><p class="calendar-legend">● 開催予定　× 中止　日付の印から詳細へ</p><p class="calendar-updated">情報確認：{data["last_checked"].replace("-",".")} ／ 毎週更新</p></div>
+ <div class="calendar-layout"><div class="calendar-table-wrap"><table class="calendar-table"><caption data-calendar-caption>{year}年{month}月 府内のイベント予定</caption><thead><tr>{''.join('<th scope="col">'+x+'</th>' for x in '日月火水木金土')}</tr></thead><tbody data-calendar-body>{''.join(rows)}</tbody></table><p class="calendar-legend">● 開催予定　× 中止　日付の印から詳細へ</p><p class="calendar-updated">情報確認：{data["last_checked"].replace("-",".")} ／ 毎週更新</p></div>
  <div class="local-event-list"><label class="calendar-list-scope" data-calendar-controls hidden>一覧の表示<select data-calendar-scope aria-label="予定一覧の表示範囲"><option value="all">これからの予定（全月）</option><option value="month">カレンダーの月のみ</option></select></label><p class="calendar-count" data-calendar-count role="status">{len(events)}件のイベント</p>{''.join(cards)}<p class="calendar-empty" data-calendar-empty hidden>選択した条件の掲載予定はありません。ほかの月・種別もご覧ください。</p></div></div>
  <noscript><p>JavaScriptが無効な場合は、上記カレンダーと日程順の一覧をご利用ください。</p></noscript>
  <script type="application/json" data-calendar-data>{payload}</script></section>'''

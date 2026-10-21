@@ -3,11 +3,14 @@
 Static website for the Osaka esports Union. Published production is served from
 `main` through GitHub Pages at https://www.jesu-osaka.jp/.
 
-The redesign is prepared on `design/jesu-refresh-20261020`; it has not been pushed
-or deployed. A separate existing test repository is available at
-`entry-package/jesu-osaka-test-site`. External preview publication requires the
-president's approval of the prepared version; production follows a separate
-confirmation of that preview.
+The approved v15 release was published on 2026-10-21 after separate review-copy
+and external-preview approvals. Preview: `entry-package/jesu-osaka-test-site`
+commit `207f54f`. Production: PR #5, merge commit `7cefd88`.
+The 38 production files were published from the preserved `production-v15`
+artifact; all live SHA-256 values matched its manifest. Page content, CSS,
+scripts and assets match the approved preview; only CNAME and indexing metadata differ.
+Editable sources remain on `design/jesu-refresh-20261020`; public release branches
+contain static artifacts only. Further publication requires review of the proposed version.
 
 ## Build and verify
 
@@ -29,7 +32,7 @@ Production and preview retain identical page content, CSS, scripts and assets;
 only indexing metadata, robots.txt and production CNAME differ. Do not change the
 prepared page content between approved preview and production.
 
-The six pages share navigation and styles. Date-dependent event labels stop
+The eight pages share navigation and styles. Date-dependent event labels stop
 inviting registration when the published event end time passes. Review copies are
 not an event management system and do not submit inquiries.
 

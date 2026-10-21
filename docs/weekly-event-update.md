@@ -36,3 +36,7 @@ frozenには本番・テスト両成果物とcandidate.json、research.jsonを�
 公開はdocs/weekly-publication-proposal.mdと現在の正本に従う。2026-10-21に社長の限定承認を正本へ反映し、ゲートはenabled=trueになった。現在の正本とゲートを読み、上記stage/dry-run、Drive保存・再取得照合が成功したらpublish（--dry-runなし）を実行する。カレンダー欄は各回の追加承認待ちにしない。ゲートが無効なら公開せず候補保存まで。自分で正本・ゲート・承認を変更しない。
 
 公開後はpublication.jsonへ実コミットと照合結果を記録する。source_imported=falseなら次回公開を進めず編集元を照合する。publication-started.jsonがある失敗回は自動再送せず、現状を先に確認する。
+
+## SNS制作への受け渡し（2026-10-21 社長直接依頼）
+
+カレンダーの本番公開と全件照合、source_imported=trueを確認した後（変更なしなら本番欄と編集元の一致確認後）、docs/calendar-sns.mdに従い、python3 /Users/yukuno/.local/share/jesu-osaka/repo/scripts/queue-calendar-sns.py --output <run>/sns-intake.json を実行する。既存mascot-editorial/inboxへJeSU大阪X向け事実パックを渡し、同じ週・内容を重複作成しない。SNS受け渡し失敗は本番サイトの正常更新と区別して記録・再開する。未公開候補や合成データは渡さない。SNSは本人の版ごとの承認が必要。受信箱登録を投稿済みと書かない。既存x-weekly-draftsが日次に処理するが、週次実行自身も実際の原稿・未チェックの媒体別承認行への到達を確認し、未処理なら現行人格と公式情報を確認して既存campaign_pipeline prepare / sheet-prepend経由で登録する。新規の外部送信はしない。

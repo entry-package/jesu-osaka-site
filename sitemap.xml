@@ -1,13 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.jesu-osaka.jp/</loc>
-    <lastmod>2026-07-01</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jesu-osaka.jp/joshin-news.html</loc>
-    <lastmod>2026-07-01</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jesu-osaka.jp/contact.html</loc>
-  </url></urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://www.jesu-osaka.jp/</loc></url><url><loc>https://www.jesu-osaka.jp/news.html</loc></url><url><loc>https://www.jesu-osaka.jp/events.html</loc></url><url><loc>https://www.jesu-osaka.jp/joshin-news.html</loc></url><url><loc>https://www.jesu-osaka.jp/contact.html</loc></url><url><loc>https://www.jesu-osaka.jp/seminar-vol1-report.html</loc></url><url><loc>https://www.jesu-osaka.jp/event-guidelines.html</loc></url></urlset>

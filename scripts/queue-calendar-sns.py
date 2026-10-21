@@ -33,7 +33,7 @@ def source(data, local_html, live_html, now):
     facts = [{"id":"calendar","text":"大阪府内のゲーム・eスポーツの公式イベント予定を公開カレンダーで案内しています。","source_url":URL}]
     for event in upcoming:
         facts.append({"id":event["id"],"text":event["name"]+" / "+", ".join(event["dates"])+" / "+event["venue"],"source_url":event["official_url"]})
-    return {"brand":"jesu_osaka","kind":"news","url":URL+"?week="+monday.isoformat(),
+    return {"brand":"jesu_osaka","origin_brand":"jesu_osaka","kind":"news","url":URL+"?week="+monday.isoformat(),
             "title":"大阪のゲーム・eスポーツ予定｜"+monday.isoformat()+"週",
             "trigger":"news_published","visibility":"public","body_verified":True,
             "verified_at":now.isoformat(),"expires_at":expiry.isoformat(),

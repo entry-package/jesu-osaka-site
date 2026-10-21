@@ -14,3 +14,6 @@ python3 /Users/yukuno/.local/share/jesu-osaka/repo/scripts/queue-calendar-sns.py
 導入時の手動の受け渡し・承認表登録と、次回の定刻での連携は別に記録する。
 
 2026-10-21 配車基盤更新への追随: 新規X稿は現行のreferences/x-official-publication-policy.mdを優先し、両承認タブと標準予約の新しいslot-inventoryを取得してprepare-batchで枠を確定する。同一アカウント60分の間隔と原稿別の公開期限を内容SHAに結び付ける。既に承認/公開済みの初回稿は書き換えない。現在の投稿係は既存ブラウザ経路であり、無効な旧API比較案のOAuth/残高を停止理由にしない。新規OAuth・課金・新規送信経路をこの手順から追加しない。
+
+## PACkage側へ展開しない（2026-10-22）
+JeSU大阪とPACkageは別主体。カレンダー由来の地域情報はJeSU大阪 X・Webに限定し、PACkageのSNS/Web、社内Discord、PACsへ自動展開しない。JeSU大阪またはPACkage自身の主催・運営等の関与が確認できるものだけを、独立した自社告知として扱う。パコの正規経路が不調な場合も通常アカウントへ切り替えない。地域カレンダーの掲載基準・週次公開範囲は変更しない。

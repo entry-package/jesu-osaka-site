@@ -1,8 +1,6 @@
-# 週次カレンダー公開の限定運用案
+# 週次カレンダー公開の限定運用（2026-10-21発効）
 
-現在は毎週月曜09:00 JST、豊中Mac miniの既存ジョブが有効です。公開ゲートは無効です。この文書は承認を与えません。
-
-社長の「本番公開前にテスト公開を見せて確認」の限定例外として、週次の府内イベントカレンダー欄だけを毎回の確認なしで更新する案です。社長が本案へ明確にOKした後、正本へ限定例外を反映してゲートを有効にします。全サイト・他社サイト・SNS・メールの公開権限にはしません。
+毎週月曜09:00 JST、豊中Mac miniの既存ジョブで実行。社長が範囲提示後の2026-10-21に直接承認したため、Drive INDEXに限定追補を追加し、実行機とMacBookのAGENTSへ同じ限定例外を反映、公開ゲートを有効化した。正本fileId: 1Y04BGoHtscfwE9bO3q3zN3Rv80PLPAMK。相関ID: A2-20261021-jesu-weekly-calendar-autopublish。
 
 1. 毎週月曜日09:00に、JeSU・ゲームメーカー・主要プロチーム/配信者・登録フォーム・PACkage関連の大阪開催予定を公式発表で調査します。PACkage関連は規模・ジャンル不問、内部の未公表案件は掲載しません。
 2. 変更対象はindex.htmlとevents.htmlのOSAKA_CALENDAR_START〜ENDだけです。日程・会場・時間・参加費・リンク・概要・中止/延期・情報確認日を更新します。写真、レポート、CSS、問い合わせ、上の主催案内、掲載基準、役員紹介は変更しません。
@@ -13,5 +11,5 @@
 7. 成果物・差分・出典・確認結果は既存共有Driveへ保存して再取得照合し、同じNotion作業ログへ結果と次回を記録します。変更が無ければ不要な公開をしません。
 8. MacBookには常駐ジョブを作りません。モデル・effortは既存CLI選択を継承します。
 
-実装はscripts/weekly-release.py、公開ゲートはops/weekly-publication.jsonです。現在enabled=falseのため、通常のpublishはPermissionErrorで停止し、push・PR・公開を行いません。自動処理自身はゲート、正本、承認記録を変更しません。
+実装はscripts/weekly-release.py、公開ゲートはops/weekly-publication.jsonです。現在enabled=true。正本で承認されたカレンダー欄だけ、テスト公開・照合・本番公開・照合まで自動実行します。合成試験データはゲートに関係なく公開を拒否します。自動処理自身はゲート、正本、承認記録を変更しません。
 停止は python3 ~/.local/bin/cli-automation.py pause jesu-osaka-events-weekly。公開だけ止める場合はゲートを無効にします。

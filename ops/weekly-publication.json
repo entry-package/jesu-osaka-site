@@ -1,10 +1,13 @@
 {
   "schema_version": 1,
-  "enabled": false,
+  "enabled": true,
   "scope": "calendar-only",
-  "owner_authorization_ref": null,
-  "reason": "Await explicit approval of the recurring calendar-only publication exception; do not infer approval from this file.",
+  "owner_authorization_ref": "drive:1Y04BGoHtscfwE9bO3q3zN3Rv80PLPAMK#A2-20261021-jesu-weekly-calendar-autopublish",
+  "reason": "Direct owner approval after the calendar-only recurring publication proposal on 2026-10-21; authoritative scoped addendum is linked from company INDEX.",
   "schedule": "Monday 09:00 Asia/Tokyo",
   "preview_repository": "entry-package/jesu-osaka-test-site",
-  "production_repository": "entry-package/jesu-osaka-site"
+  "production_repository": "entry-package/jesu-osaka-site",
+  "authorized_at": "2026-10-21",
+  "authorized_by": "山口 勇",
+  "origin_ref": "codex:thread/01a15887-613f-7c23-9fd8-a17a16eb514d#weekly-calendar-approval-20261021"
 }

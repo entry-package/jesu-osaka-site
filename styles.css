@@ -1876,8 +1876,11 @@ article[id] {
   font-size: 12px;
   border-bottom: 2px solid #222;
 }
-.calendar-table th:last-child {
+.calendar-table th:first-child {
   color: #b51e2b;
+}
+.calendar-table th:last-child {
+  color: #2367a2;
 }
 .calendar-table td {
   vertical-align: top;

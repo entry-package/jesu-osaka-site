@@ -17,7 +17,9 @@ TEST_URL = "https://entry-package.github.io/jesu-osaka-test-site/"
 
 def call(args, cwd=ROOT):
     return subprocess.check_output([str(x) for x in args], cwd=cwd, text=True).strip()
-def git(*args, cwd=ROOT): return call(["git", *args], cwd)
+def git(*args, cwd=ROOT):
+    value=subprocess.check_output(["git", *args], cwd=cwd, text=True)
+    return value if args and args[0]=="show" else value.strip()
 def sha(data): return hashlib.sha256(data).hexdigest()
 def read(path): return json.loads(Path(path).read_text())
 def write(path, obj):

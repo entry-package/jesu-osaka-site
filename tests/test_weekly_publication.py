@@ -34,6 +34,17 @@ class CalendarPublicationTests(unittest.TestCase):
     def test_future_removal_needs_evidence(self):
         previous,research=self.records();updated=copy.deepcopy(previous);updated["events"]=[]
         with self.assertRaises(ValueError):release.verified_research(updated,research,"2026-10-21",previous)
+    def test_git_show_preserves_html_newlines_for_scope_check(self):
+        with tempfile.TemporaryDirectory() as td:
+            repo=Path(td)
+            subprocess.run(["git","init","-b","source",str(repo)],check=True,capture_output=True)
+            original="header\n"+release.START+"old"+release.END+"footer\n"
+            (repo/"index.html").write_text(original)
+            subprocess.run(["git","-C",str(repo),"add","index.html"],check=True)
+            subprocess.run(["git","-C",str(repo),"-c","user.name=Test","-c","user.email=test@example.com","commit","-m","baseline"],check=True,capture_output=True)
+            actual=release.git("show","HEAD:index.html",cwd=repo)
+            self.assertEqual(actual,original)
+            release.verify_scope(actual,original.replace("old","new"))
     def test_worktree_reuse_does_not_relabel_its_base(self):
         with tempfile.TemporaryDirectory() as td:
             repo=Path(td)/"repo";repo.mkdir()

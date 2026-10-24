@@ -17,3 +17,6 @@ python3 /Users/yukuno/.local/share/jesu-osaka/repo/scripts/queue-calendar-sns.py
 
 ## PACkage側へ展開しない（2026-10-22）
 JeSU大阪とPACkageは別主体。カレンダー由来の地域情報はJeSU大阪 X・Webに限定し、PACkageのSNS/Web、社内Discord、PACsへ自動展開しない。JeSU大阪またはPACkage自身の主催・運営等の関与が確認できるものだけを、独立した自社告知として扱う。パコの正規経路が不調な場合も通常アカウントへ切り替えない。地域カレンダーの掲載基準・週次公開範囲は変更しない。
+
+## JeSUが関わる催事だけ個別に取り上げる（2026-10-24 社長直接指示）
+社長原文「JeSU大阪で個別のイベントを取り上げるのはやめてほしい。JeSUが主催もしくは共催や運営、後援、協力しているもののみ」。SNSへ渡す事実パックには、JeSU本部・JeSU大阪が主催・共催・運営・後援・協力する催事だけを入れる（`queue-calendar-sns.py` の `jesu_involved`。category=jesu かつ主催者がJeSU、または `jesu_role` に主催・共催・運営・後援・協力のどれかを公式の記載どおり入れた催事）。それ以外の催事はカレンダーへの掲載だけにし、週次投稿は府内カレンダー全体への案内とCTAにする。カレンダーの掲載基準・週次公開範囲は変えない。制作側の機械チェックは pkg-ai-brain mascot-sns-operations の `jesu_involvement_blockers`（references/brand-separation.md 末尾）。

@@ -13,6 +13,14 @@ def calendar_block(html):
     if len(found) != 1: raise ValueError("exactly one calendar block required")
     return found[0]
 
+JESU_ROLES = ("主催", "共催", "運営", "後援", "協力")
+
+def jesu_involved(event):
+    """2026-10-24 社長指示: JeSU大阪で個別に取り上げるのはJeSUが主催・共催・運営・後援・協力する催事だけ。"""
+    if event.get("jesu_role") in JESU_ROLES: return True
+    organizer = event.get("organizer", "")
+    return event.get("category") == "jesu" and ("JeSU" in organizer or "eスポーツ連合" in organizer)
+
 def source(data, local_html, live_html, now):
     if now.tzinfo is None: raise ValueError("timezone required")
     now = now.astimezone(JST)
@@ -24,7 +32,7 @@ def source(data, local_html, live_html, now):
     upcoming = []
     for event in data["events"]:
         dates = [day for day in event["dates"] if now.date().isoformat() <= day <= (now.date()+dt.timedelta(days=30)).isoformat()]
-        if not dates or event["status"] != "scheduled": continue
+        if not dates or event["status"] != "scheduled" or not jesu_involved(event): continue
         upcoming.append({"id":event["id"],"name":event["name"],"dates":dates,
                          "venue":event["venue"],"official_url":event["official_url"],
                          "calendar_checked_at":event["checked_at"]})
@@ -42,7 +50,7 @@ def source(data, local_html, live_html, now):
             "receipt":{"kind":"published_calendar_readback","url":URL,"observed_at":now.isoformat(),
                        "calendar_sha256":hashlib.sha256(calendar_block(live_html).encode()).hexdigest(),
                        "event_verification_dates":{e["id"]:e["calendar_checked_at"] for e in upcoming}},
-            "editorial_instruction":"JeSU大阪のX @OsakaGamers専用。パックゼロ。今週の見どころを最大3件とカレンダーへのCTA1つ。外部催事をJeSU主催と書かない。個別告知へ展開する場合は当日公式URLを再確認。既存媒体別承認へ未チェックで提出。投稿・予約は本人承認後の既存配車係だけ。"}
+            "editorial_instruction":"JeSU大阪のX @OsakaGamers専用。パックゼロ。府内カレンダー全体への案内とCTA1つ。本文で名前・日時を挙げてよいのはfactsにあるJeSUが主催・共催・運営・後援・協力する催事だけ（2026-10-24 社長指示）。それ以外の個別催事は書かない・個別告知へ展開しない。既存媒体別承認へ未チェックで提出。投稿・予約は本人承認後の既存配車係だけ。"}
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)

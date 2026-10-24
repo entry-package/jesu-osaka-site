@@ -14,7 +14,11 @@
     "/",
     "/contact-thanks.html",
     "/contact.html",
+    "/event-guidelines.html",
     "/events.html",
     "/news.html"
+  ],
+  "exclude_paths": [
+    "/event-guidelines.html"
   ]
 }

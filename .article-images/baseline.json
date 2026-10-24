@@ -1,11 +1,7 @@
 {
   "schema_version": 1,
-  "config_sha256": "c86d035f8b32a21f64872cfb14539885fc1fcc172815b86e5f44d07cddc53cfd",
+  "config_sha256": "f5fe3ba75cae65b1a1806c57d3628fa317bb68475ce161f4cb3048ad5b955134",
   "articles": {
-    "/event-guidelines.html": {
-      "content": "ecd6480e7e141201f1ba79303b94454fc0862ce6b4e8eaf92ed77d05f2b41dfc",
-      "cards": {}
-    },
     "/joshin-news.html": {
       "content": "c252b432a76444f8ce9209c6e3fdfc3e671a9dad87b287e639ed643db8e0e6d4",
       "cards": {}

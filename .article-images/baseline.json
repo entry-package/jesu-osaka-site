@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "config_sha256": "f5fe3ba75cae65b1a1806c57d3628fa317bb68475ce161f4cb3048ad5b955134",
+  "articles": {
+    "/joshin-news.html": {
+      "content": "c252b432a76444f8ce9209c6e3fdfc3e671a9dad87b287e639ed643db8e0e6d4",
+      "cards": {}
+    },
+    "/seminar-vol1-report.html": {
+      "content": "98883d487bd7bc1045fbd40ab2efa6f6d3ae1c8d8340c49e77a9106101109426",
+      "cards": {}
+    }
+  }
+}

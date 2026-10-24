@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Verify the release graph, metadata, and preservation of form protections."""
-import argparse,json,re
+import argparse,json,re,subprocess,sys
 from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit,unquote
@@ -17,6 +17,8 @@ class Page(HTMLParser):
    if a.get(key):self.refs.append(a[key])
  def handle_data(self,data):self.text.append(data)
 def validate(root,preview):
+ runtime=Path.home()/'.local/share/site-image-gate/venv/bin/python'
+ subprocess.run([str(runtime) if runtime.is_file() else sys.executable,str(Path(__file__).resolve().parents[1]/'.article-images/gate.py'),'--root',str(root)],check=True)
  errors=[];pages={f.name:Page(f.read_text()) for f in root.glob('*.html')};count=0
  for name,page in pages.items():
   if page.h1!=1:errors.append(f'{name}: expected exactly one h1')

@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Create an isolated, deterministic static release; never deploys."""
-import argparse, hashlib, json, shutil
+import argparse, hashlib, json, shutil, subprocess, sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
+IMAGE_PYTHON=Path.home()/'.local/share/site-image-gate/venv/bin/python'
+IMAGE_PYTHON=str(IMAGE_PYTHON) if IMAGE_PYTHON.is_file() else sys.executable
 PAGES=['index.html','news.html','events.html','joshin-news.html','contact.html','contact-thanks.html','seminar-vol1-report.html','event-guidelines.html']
 def main():
  parser=argparse.ArgumentParser();parser.add_argument('--output',required=True);parser.add_argument('--preview',action='store_true');args=parser.parse_args()
@@ -17,6 +19,8 @@ def main():
   (out/name).write_bytes(body)
  shutil.copytree(ROOT/'assets',out/'assets')
  (out/'robots.txt').write_text('User-agent: *\nDisallow: /\n' if args.preview else 'User-agent: *\nAllow: /\nSitemap: https://www.jesu-osaka.jp/sitemap.xml\n')
+ subprocess.run([sys.executable,str(ROOT/'.article-images/seal.py'),str(ROOT/'content/article-images.json'),str(out/'article-images.json')],check=True)
+ subprocess.run([IMAGE_PYTHON,str(ROOT/'.article-images/gate.py'),'--root',str(out)],check=True)
  manifest={str(f.relative_to(out)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(out.rglob('*')) if f.is_file()}
  print(json.dumps({'output':str(out),'preview':args.preview,'file_count':len(manifest),'sha256':hashlib.sha256(json.dumps(manifest,sort_keys=True).encode()).hexdigest(),'files':manifest},ensure_ascii=False,indent=2))
 if __name__=='__main__':main()

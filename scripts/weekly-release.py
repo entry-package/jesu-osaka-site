@@ -46,6 +46,7 @@ def snapshot(ref, output):
         info, name = row.split("\t", 1)
         mode, kind, oid = info.split()
         rel = Path(name)
+        if rel.parts[0] in ('.github','.article-images'): continue
         if mode not in ("100644", "100755") or kind != "blob" or rel.is_absolute() or ".." in rel.parts:
             raise ValueError("unsupported release tree")
         p = output / rel
@@ -154,6 +155,7 @@ def verify_candidate(folder):
         raise ValueError("source code changed after freeze")
     for row in git("ls-tree","-r",c["baseline"]).splitlines():
         info,name=row.split("\t",1)
+        if Path(name).parts[0] in (".github",".article-images"): continue
         if name not in c["production"]: raise ValueError("baseline file removed")
         expected=subprocess.check_output(["git","show",c["baseline"]+":"+name],cwd=ROOT)
         actual=(folder/"production"/name).read_bytes()
@@ -163,7 +165,7 @@ def verify_candidate(folder):
         elif expected != actual: raise ValueError("non-calendar release changed")
     actual_changed=[name for name in c["production"] if sha(subprocess.check_output(["git","show",c["baseline"]+":"+name],cwd=ROOT)) != c["production"][name]]
     if sorted(actual_changed) != sorted(c["changed_files"]) or not set(actual_changed)<=set(PAGES): raise ValueError("changed file list mismatch")
-    baseline_names=set(git("ls-tree","-r","--name-only",c["baseline"]).splitlines())
+    baseline_names={name for name in git("ls-tree","-r","--name-only",c["baseline"]).splitlines() if Path(name).parts[0] not in (".github",".article-images")}
     if baseline_names != set(c["production"]): raise ValueError("release files added")
     if set(c["preview"]) != set(c["production"])-{"CNAME"}: raise ValueError("preview file set changed")
     for name in c["preview"]:
@@ -188,9 +190,19 @@ def check_live(url, files):
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool: return list(pool.map(check, files.items()))
 def wait_pages(repo, commit):
     for _ in range(48):
-        r=json.loads(call(["gh","api","repos/"+repo+"/pages/builds/latest"]))
-        if r.get("commit")==commit and r.get("status")=="built": return
-        if r.get("commit")==commit and r.get("status")=="errored": raise ValueError("Pages failed")
+        workflow=subprocess.run(["gh","api","repos/"+repo+"/actions/workflows/article-images-pages.yml/runs?head_sha="+commit+"&per_page=5"],text=True,capture_output=True)
+        if workflow.returncode==0:
+            runs=json.loads(workflow.stdout).get("workflow_runs",[])
+            finished=[r for r in runs if r.get("head_sha")==commit and r.get("head_branch")=="main" and r.get("status")=="completed"]
+            if finished:
+                if finished[0].get("conclusion")=="success": return
+                raise ValueError("Gated Pages workflow failed")
+        elif "404" in workflow.stderr:
+            r=json.loads(call(["gh","api","repos/"+repo+"/pages/builds/latest"]))
+            if r.get("commit")==commit and r.get("status")=="built": return
+            if r.get("commit")==commit and r.get("status")=="errored": raise ValueError("Pages failed")
+        else:
+            raise RuntimeError("Unable to observe Pages workflow")
         time.sleep(5)
     raise TimeoutError("Pages build not verified")
 def publish_tree(repo, folder, frozen, baseline, branch, production=False):
@@ -201,7 +213,7 @@ def publish_tree(repo, folder, frozen, baseline, branch, production=False):
     git("worktree","add","-b",branch,str(work),current)
     backup=folder/("before-production" if production else "before-preview");backup.mkdir()
     for p in work.iterdir():
-        if p.name != ".git": shutil.move(str(p),backup/p.name)
+        if p.name not in (".git",".github",".article-images"): shutil.move(str(p),backup/p.name)
     for p in frozen.iterdir():
         if p.is_dir(): shutil.copytree(p,work/p.name)
         else: shutil.copy2(p,work/p.name)

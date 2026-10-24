@@ -1,0 +1,24 @@
+{
+  "origin": "https://www.jesu-osaka.jp",
+  "article_paths": [
+    "/joshin-news.html",
+    "/seminar-vol1-report.html"
+  ],
+  "listing_paths": [
+    "/news.html"
+  ],
+  "required_listing_paths": [
+    "/news.html"
+  ],
+  "non_article_paths": [
+    "/",
+    "/contact-thanks.html",
+    "/contact.html",
+    "/event-guidelines.html",
+    "/events.html",
+    "/news.html"
+  ],
+  "exclude_paths": [
+    "/event-guidelines.html"
+  ]
+}

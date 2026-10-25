@@ -46,3 +46,5 @@ frozenには本番・テスト両成果物とcandidate.json、research.jsonを�
 公開カテゴリ「PACkage関連」は廃止し「企業主催」（category=corporate）に統合する。既存のPACkage関係6件とREDEE主催4件は企業主催へ。REDEEは行政の支援対象であっても主催者を基準に分類し、publicへ戻さない。ゲームメーカー・プロチーム・配信者・JeSUの専用区分は維持。掲載の可否と主催区分を分離し、package_relatedとpackage_relationは内部の従来の掲載条件の検証にだけ使う。企業主催全体へPACkageの小規模・180日超の例外を広げない。
 
 カレンダーの週は日曜始まり（日・月・火・水・木・金・土）。日曜を左端の赤、土曜を右端の青とし、静的HTMLとJavaScriptによる月切替の両方で同じ日付配置を維持する（社長直接指示）。日付ラベルの曜日計算は表示列の並びと混同しない。
+
+GitHub Actions方式の本番公開では、公式upload-pages-artifactが空の管理ファイル `.nojekyll` を除外する。週次の未認証照合は実際に成功した公開方式に応じて対象を決め、workflowの場合だけ空の `.nojekyll` を配信対象外とする。HTML・JS・画像等は全件SHA-256一致を要求する。他の隠しファイル、内容の入った `.nojekyll`、公開ファイルの欠落・不一致は失敗にする。旧方式のテスト公開では従来どおり全ファイルを照合する。

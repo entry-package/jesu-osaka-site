@@ -1,5 +1,6 @@
 import copy,datetime as dt,importlib.util,json,subprocess,tempfile,unittest
 from pathlib import Path
+from unittest import mock
 ROOT=Path(__file__).resolve().parents[1]
 def module(name,file):
     spec=importlib.util.spec_from_file_location(name,ROOT/"scripts"/file)
@@ -17,6 +18,28 @@ class CalendarPublicationTests(unittest.TestCase):
         self.assertFalse(release.enabled({"enabled":True,"scope":"calendar-only","owner_authorization_ref":None}))
         self.assertFalse(release.enabled({"enabled":False,"scope":"calendar-only","owner_authorization_ref":"reviewed-owner-reference"}))
         self.assertFalse(release.enabled({"enabled":True,"scope":"whole-site","owner_authorization_ref":"reviewed-owner-reference"}))
+    def test_workflow_omits_only_empty_jekyll_marker(self):
+        files={".nojekyll":release.sha(b""),"index.html":release.sha(b"page")}
+        self.assertEqual(release.public_files(files,"workflow"),{"index.html":files["index.html"]})
+        self.assertEqual(release.public_files(files,"legacy"),files)
+    def test_workflow_rejects_unexpected_hidden_or_nonempty_control_file(self):
+        for files in ({".nojekyll":release.sha(b"content")},{".hidden/data.json":release.sha(b"data")}):
+            with self.assertRaises(ValueError):release.public_files(files,"workflow")
+        with self.assertRaises(ValueError):release.public_files({},"unknown")
+    def test_workflow_still_rejects_changed_public_asset(self):
+        response=mock.MagicMock();response.__enter__.return_value=response
+        response.status=200;response.read.return_value=b"changed"
+        with mock.patch.object(release.urllib.request,"urlopen",return_value=response):
+            with self.assertRaisesRegex(ValueError,"public artifact mismatch: index.html"):
+                release.check_live("https://example.com/",{".nojekyll":release.sha(b""),"index.html":release.sha(b"approved")},"workflow")
+    def test_pages_wait_reports_verified_build_type(self):
+        completed={"head_sha":"abc","head_branch":"main","status":"completed","conclusion":"success"}
+        workflow=mock.Mock(returncode=0,stdout=json.dumps({"workflow_runs":[completed]}))
+        with mock.patch.object(release.subprocess,"run",return_value=workflow):
+            self.assertEqual(release.wait_pages("owner/repo","abc"),"workflow")
+        missing=mock.Mock(returncode=1,stderr="HTTP 404")
+        with mock.patch.object(release.subprocess,"run",return_value=missing),mock.patch.object(release,"call",return_value=json.dumps({"commit":"abc","status":"built"})):
+            self.assertEqual(release.wait_pages("owner/repo","abc"),"legacy")
     def records(self):
         event={"id":"example","official_url":"https://example.com/event","checked_at":"2026-10-20","dates":["2026-10-30"],"name":"Old"}
         data={"events":[event],"last_checked":"2026-10-20"}

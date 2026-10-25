@@ -180,7 +180,18 @@ def verify_candidate(folder):
     return c
 def enabled(policy):
     return policy.get("enabled") is True and policy.get("scope") == "calendar-only" and bool(policy.get("owner_authorization_ref"))
-def check_live(url, files):
+def public_files(files, build_type="legacy"):
+    if build_type not in ("legacy", "workflow"): raise ValueError("unknown Pages build type")
+    if build_type == "legacy": return dict(files)
+    # actions/upload-pages-artifact@v4 excludes hidden files. Only the empty
+    # Jekyll build marker is expected here; never hide missing content files.
+    hidden = {name for name in files if any(part.startswith(".") for part in Path(name).parts)}
+    if hidden - {".nojekyll"}: raise ValueError("unexpected hidden public file")
+    if ".nojekyll" in files and files[".nojekyll"] != sha(b""):
+        raise ValueError("nonempty Jekyll control file")
+    return {name: digest for name, digest in files.items() if name != ".nojekyll"}
+def check_live(url, files, build_type="legacy"):
+    files = public_files(files, build_type)
     def check(item):
         name, digest = item
         with urllib.request.urlopen(urllib.request.Request(url+name, headers={"Cache-Control":"no-cache"}), timeout=30) as res:
@@ -195,11 +206,11 @@ def wait_pages(repo, commit):
             runs=json.loads(workflow.stdout).get("workflow_runs",[])
             finished=[r for r in runs if r.get("head_sha")==commit and r.get("head_branch")=="main" and r.get("status")=="completed"]
             if finished:
-                if finished[0].get("conclusion")=="success": return
+                if finished[0].get("conclusion")=="success": return "workflow"
                 raise ValueError("Gated Pages workflow failed")
         elif "404" in workflow.stderr:
             r=json.loads(call(["gh","api","repos/"+repo+"/pages/builds/latest"]))
-            if r.get("commit")==commit and r.get("status")=="built": return
+            if r.get("commit")==commit and r.get("status")=="built": return "legacy"
             if r.get("commit")==commit and r.get("status")=="errored": raise ValueError("Pages failed")
         else:
             raise RuntimeError("Unable to observe Pages workflow")
@@ -246,10 +257,10 @@ def publish(folder, dry_run=False):
         write(folder/"publication-started.json",{"candidate":c["id"],"baseline":c["baseline"]})
         branch="calendar/weekly-"+c["id"]
         pre=publish_tree(TEST_REPO,folder,folder/"preview",None,"preview/"+c["id"])
-        wait_pages(TEST_REPO,pre);check_live(TEST_URL,c["preview"])
+        pre_mode=wait_pages(TEST_REPO,pre);check_live(TEST_URL,c["preview"],pre_mode)
         verify_candidate(folder)
         prod=publish_tree(PROD_REPO,folder,folder/"production",c["baseline"],branch,True)
-        wait_pages(PROD_REPO,prod);check_live(PROD_URL,c["production"])
+        prod_mode=wait_pages(PROD_REPO,prod);check_live(PROD_URL,c["production"],prod_mode)
         work=Path(c["source_worktree"])
         git("add","content/osaka-events.json",*PAGES,cwd=work)
         if git("diff","--cached","--name-only",cwd=work):
@@ -257,7 +268,7 @@ def publish(folder, dry_run=False):
         imported=False
         if git("rev-parse","HEAD")==c["source_base"] and not git("status","--porcelain"):
             git("merge","--ff-only",git("rev-parse","HEAD",cwd=work));imported=True
-        result={"publication":"verified","preview_commit":pre,"production_commit":prod,"source_imported":imported,"url":PROD_URL}
+        result={"publication":"verified","preview_commit":pre,"production_commit":prod,"source_imported":imported,"url":PROD_URL,"preview_build_type":pre_mode,"production_build_type":prod_mode,"production_public_files":len(public_files(c["production"],prod_mode))}
         write(folder/"publication.json",result);return result
 def main():
     p=argparse.ArgumentParser();sub=p.add_subparsers(dest="command",required=True)

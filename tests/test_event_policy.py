@@ -1,4 +1,4 @@
-import copy,importlib.util,json,unittest,datetime as dt
+import copy,importlib.util,json,re,unittest,datetime as dt
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location("events",ROOT/"scripts/render-events.py");mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
@@ -58,4 +58,21 @@ class EventPolicyTests(unittest.TestCase):
  def test_postponed_unknown_date_is_not_scheduled(self):
   self.data["events"][0]["status"]="postponed"
   self.assertNotIn(self.data["events"][0],mod.active_events(self.data,self.policy))
+ def test_static_default_only_includes_jesu_involved_without_padding(self):
+  text=mod.render(self.data,self.policy,"home-",today="2026-10-25")
+  visible=re.findall(r'<article[^>]*data-calendar-item="([^"]+)"(?! hidden)>',text)
+  self.assertEqual(visible,["jesu-seminar-vol2-2026"])
+  self.assertIn('data-calendar-item="spaworld-halloween-digital-2026" hidden',text)
+  after=mod.render(self.data,self.policy,"home-",today="2026-10-27")
+  self.assertEqual(re.findall(r'<article[^>]*data-calendar-item="([^"]+)"(?! hidden)>',after),[])
+  self.assertIn('data-calendar-empty>',after)
+ def test_jesu_involvement_matches_existing_editorial_scope(self):
+  spec=importlib.util.spec_from_file_location("sns",ROOT/"scripts/queue-calendar-sns.py")
+  sns=importlib.util.module_from_spec(spec);spec.loader.exec_module(sns)
+  fixtures=self.data["events"]+[
+   {"category":"jesu","organizer":"外部主催者"},
+   {"category":"jesu","organizer":"一般社団法人日本eスポーツ連合"},
+   *({"category":"corporate","jesu_role":role} for role in ("主催","共催","運営","後援","協力","来場")),
+  ]
+  for event in fixtures:self.assertEqual(mod.jesu_involved(event),sns.jesu_involved(event))
 if __name__=="__main__":unittest.main()

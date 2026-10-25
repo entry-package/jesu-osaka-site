@@ -47,9 +47,15 @@
       return date.toISOString().slice(0, 7);
     });
   }
+  function jesuInvolved(event) {
+    if (["主催", "共催", "運営", "後援", "協力"].includes(event.jesu_role)) return true;
+    const organizer = event.organizer || "";
+    return event.category === "jesu" &&
+      (organizer.includes("JeSU") || organizer.includes("eスポーツ連合"));
+  }
   function upcomingIds(events, month, category, today, scope) {
     const dated = occurrences(events, scope === "month" ? month : "", category, today)
-      .filter(({ event }) => scope !== "upcoming" || event.status !== "cancelled")
+      .filter(({ event }) => scope !== "upcoming" || (event.status === "scheduled" && jesuInvolved(event)))
       .sort((a, b) => a.date.localeCompare(b.date) ||
         (a.event.start_time || "00:00").localeCompare(b.event.start_time || "00:00"));
     const ids = [...new Set(dated.map(x => x.event.id))];
@@ -61,7 +67,7 @@
     }).format(now);
   }
   if (typeof module !== "undefined")
-    module.exports = { statusLabel, occurrences, calendarMonths, upcomingIds, todayInJapan };
+    module.exports = { statusLabel, occurrences, calendarMonths, upcomingIds, todayInJapan, jesuInvolved };
   if (typeof document === "undefined") return;
   document.querySelectorAll("[data-osaka-calendar]").forEach((root) => {
     let today = todayInJapan();
@@ -115,6 +121,9 @@
         if (el) empty.before(el);
       }
       empty.hidden = visibleIds.size > 0;
+      empty.textContent = scopeSelect.value === "upcoming"
+        ? "該当するJeSU関連の開催予定はありません。府内の予定は「これからの予定（全月）」からご覧ください。"
+        : "選択した条件の掲載予定はありません。ほかの月・種別もご覧ください。";
       const [year, m] = month.split("-").map(Number);
       const start = new Date(Date.UTC(year, m - 1, 1));
       const offset = start.getUTCDay();
@@ -177,7 +186,7 @@
       root.querySelector("[data-calendar-caption]").textContent =
         year + "年" + m + "月 府内のイベント予定";
       root.querySelector("[data-calendar-count]").textContent =
-        (scopeSelect.value === "upcoming" ? "直近の予定（当日を含む） " :
+        (scopeSelect.value === "upcoming" ? "JeSUが関わる予定（当日を含む） " :
           scopeSelect.value === "all" ? "これからの予定（全月） " : year + "年" + m + "月 ") +
           visibleIds.size + "件";
       tabs.replaceChildren(...months.map(value => {

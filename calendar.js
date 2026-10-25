@@ -48,47 +48,60 @@
     });
   }
   function upcomingIds(events, month, category, today, scope) {
-    return new Set(occurrences(events, scope === "all" ? "" : month, category, today).map(x => x.event.id));
+    const dated = occurrences(events, scope === "month" ? month : "", category, today)
+      .filter(({ event }) => scope !== "upcoming" || event.status !== "cancelled")
+      .sort((a, b) => a.date.localeCompare(b.date) ||
+        (a.event.start_time || "00:00").localeCompare(b.event.start_time || "00:00"));
+    const ids = [...new Set(dated.map(x => x.event.id))];
+    return new Set(scope === "upcoming" ? ids.slice(0, 2) : ids);
+  }
+  function todayInJapan(now = new Date()) {
+    return new Intl.DateTimeFormat("sv-SE", {
+      timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit",
+    }).format(now);
   }
   if (typeof module !== "undefined")
-    module.exports = { statusLabel, occurrences, calendarMonths, upcomingIds };
+    module.exports = { statusLabel, occurrences, calendarMonths, upcomingIds, todayInJapan };
   if (typeof document === "undefined") return;
-  const today = new Intl.DateTimeFormat("sv-SE", {
-    timeZone: "Asia/Tokyo",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(new Date());
   document.querySelectorAll("[data-osaka-calendar]").forEach((root) => {
+    let today = todayInJapan();
     const payload = JSON.parse(
       root.querySelector("[data-calendar-data]").textContent,
     );
     const monthSelect = root.querySelector("[data-calendar-month]");
     const categorySelect = root.querySelector("[data-calendar-category]");
     const items = [...root.querySelectorAll("[data-calendar-item]")];
-    payload.events.forEach((e) => {
-      const el = items.find((item) => item.dataset.calendarItem === e.id);
-      if (el)
-        el.querySelector(".local-event-meta > span:last-child").textContent =
-          statusLabel(e, today);
-    });
     const scopeSelect = root.querySelector("[data-calendar-scope]");
     const tabs = root.querySelector("[data-calendar-tabs]");
-    const months = calendarMonths(payload.events, today);
-    let month = months[0];
-    monthSelect.replaceChildren(
-      ...months.map((m) => {
-        const o = document.createElement("option");
-        o.value = m;
-        o.textContent = m.replace("-", "年") + "月";
-        return o;
-      }),
-    );
-    monthSelect.value = month;
+    let months;
+    let month;
+    const updateMonths = () => {
+      const selected = monthSelect.value;
+      months = calendarMonths(payload.events, today);
+      monthSelect.replaceChildren(...months.map((m) => {
+        const option = document.createElement("option");
+        option.value = m;
+        option.textContent = m.replace("-", "年") + "月";
+        return option;
+      }));
+      month = months.includes(selected) ? selected : months[0];
+      monthSelect.value = month;
+    };
+    updateMonths();
     root
       .querySelectorAll("[data-calendar-controls]")
       .forEach((el) => (el.hidden = false));
     const render = () => {
+      const currentDay = todayInJapan();
+      if (currentDay !== today) {
+        today = currentDay;
+        updateMonths();
+      }
+      payload.events.forEach((event) => {
+        const el = items.find(item => item.dataset.calendarItem === event.id);
+        if (el) el.querySelector(".local-event-meta > span:last-child").textContent =
+          statusLabel(event, today);
+      });
       month = monthSelect.value;
       const category = categorySelect.value;
       const dated = occurrences(payload.events, month, category, today);
@@ -96,7 +109,12 @@
       items.forEach(
         (el) => (el.hidden = !visibleIds.has(el.dataset.calendarItem)),
       );
-      root.querySelector("[data-calendar-empty]").hidden = visibleIds.size > 0;
+      const empty = root.querySelector("[data-calendar-empty]");
+      for (const id of visibleIds) {
+        const el = items.find(item => item.dataset.calendarItem === id);
+        if (el) empty.before(el);
+      }
+      empty.hidden = visibleIds.size > 0;
       const [year, m] = month.split("-").map(Number);
       const start = new Date(Date.UTC(year, m - 1, 1));
       const offset = start.getUTCDay();
@@ -141,6 +159,14 @@
                     ? "中止"
                     : labels[event.category];
                 a.append(dot, text);
+                a.addEventListener("click", () => {
+                  const target = document.getElementById(a.hash.slice(1));
+                  if (target && target.matches("[data-calendar-item][hidden]")) {
+                    scopeSelect.value = "month";
+                    render();
+                    wrapped();
+                  }
+                });
                 cell.append(a);
               });
           } else cell.className = "calendar-blank";
@@ -151,7 +177,9 @@
       root.querySelector("[data-calendar-caption]").textContent =
         year + "年" + m + "月 府内のイベント予定";
       root.querySelector("[data-calendar-count]").textContent =
-        (scopeSelect.value === "all" ? "これからの予定（全月） " : year + "年" + m + "月 ") + visibleIds.size + "件";
+        (scopeSelect.value === "upcoming" ? "直近の予定（当日を含む） " :
+          scopeSelect.value === "all" ? "これからの予定（全月） " : year + "年" + m + "月 ") +
+          visibleIds.size + "件";
       tabs.replaceChildren(...months.map(value => {
         const button = document.createElement("button");
         button.type = "button";
@@ -195,7 +223,27 @@
     root
       .querySelector("[data-calendar-next]")
       .addEventListener("click", wrapped);
+    const revealLinkedEvent = () => {
+      const target = items.find(item => item.id === location.hash.slice(1));
+      if (target && target.hidden &&
+          upcomingIds(payload.events, "", categorySelect.value, today, "all").has(target.dataset.calendarItem)) {
+        scopeSelect.value = "all";
+        render();
+        target.scrollIntoView();
+      }
+    };
+    const refreshDay = () => {
+      if (todayInJapan() !== today) {
+        render();
+        wrapped();
+      }
+    };
+    window.addEventListener("hashchange", revealLinkedEvent);
+    window.addEventListener("pageshow", refreshDay);
+    document.addEventListener("visibilitychange", refreshDay);
+    window.setInterval(refreshDay, 60_000);
     render();
     wrapped();
+    revealLinkedEvent();
   });
 })();

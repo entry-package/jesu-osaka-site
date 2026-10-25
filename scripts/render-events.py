@@ -54,6 +54,9 @@ def active_events(data,policy):
  return sorted([e for e in data["events"] if e["status"]!="postponed" and any(today<=dt.date.fromisoformat(d) and (e.get("category")=="corporate" and e.get("importance",{}).get("kind")=="package_related" or dt.date.fromisoformat(d)<=last) for d in e["dates"])],key=lambda e:next(d for d in e["dates"] if dt.date.fromisoformat(d)>=today))
 def render(data,policy,prefix):
  events=active_events(data,policy);labels=policy["categories"]
+ today=dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date().isoformat()
+ upcoming=sorted((e for e in events if e["status"]=="scheduled" and any(d>=today for d in e["dates"])),key=lambda e:(next(d for d in e["dates"] if d>=today),e.get("start_time","00:00")))
+ visible_ids={e["id"] for e in upcoming[:2]}
  year,month=map(int,data["last_checked"][:7].split("-"))
  byday={}
  for e in events:
@@ -69,14 +72,15 @@ def render(data,policy,prefix):
   rows.append('<tr>'+''.join(cells)+'</tr>')
  cards=[]
  for e in events:
+  visibility="" if e["id"] in visible_ids else " hidden"
   dates='・'.join((d[:4]+"年 " if d[:4]!=data["last_checked"][:4] else "")+date_label(d) for d in e["dates"])
   status="中止" if e["status"]=="cancelled" else "開催予定"
   times=(e.get("start_time") or "開始時刻未公表")+("–"+e["end_time"] if e.get("end_time") else "")
   stale=(dt.date.fromisoformat(data["last_checked"])-dt.date.fromisoformat(e["checked_at"])).days>policy["stale_after_days"]
   if e.get("detail_anchor"):
-   cards.append(f'<article class="local-event local-event-reference" data-calendar-item="{e["id"]}"><div class="local-event-meta"><span class="tag neutral">JeSU大阪 主催</span><span>{"要再確認" if stale else status}</span></div><p class="local-event-date">{dates}<span>{times}</span></p><h3>{escape(e["name"])}</h3><a class="text-link" href="#{e["detail_anchor"]}">上の開催案内を見る ↑</a></article>')
+   cards.append(f'<article class="local-event local-event-reference" data-calendar-item="{e["id"]}"{visibility}><div class="local-event-meta"><span class="tag neutral">JeSU大阪 主催</span><span>{"要再確認" if stale else status}</span></div><p class="local-event-date">{dates}<span>{times}</span></p><h3>{escape(e["name"])}</h3><a class="text-link" href="#{e["detail_anchor"]}">上の開催案内を見る ↑</a></article>')
    continue
-  cards.append(f'''<article class="local-event" id="{prefix}{e["id"]}" data-calendar-item="{e["id"]}">
+  cards.append(f'''<article class="local-event" id="{prefix}{e["id"]}" data-calendar-item="{e["id"]}"{visibility}>
   <div class="local-event-meta"><span class="tag neutral">{labels[e["category"]]}</span><span>{"要再確認" if stale else status}</span></div>
   <p class="local-event-date">{dates}<span>{times}</span></p><h3>{escape(e["name"])}</h3>
   <p>{escape(e["summary"])}</p><dl><div><dt>会場</dt><dd>{escape(e["venue"])}（{escape(e["city"])}）</dd></div>
@@ -92,8 +96,8 @@ def render(data,policy,prefix):
  <label class="calendar-category">種別<select data-calendar-category aria-label="イベントの種別"><option value="">すべて</option>{options}</select></label></div>
  <nav class="calendar-month-tabs" aria-label="月別のイベント" data-calendar-tabs data-calendar-controls hidden></nav>
  <div class="calendar-layout"><div class="calendar-table-wrap"><table class="calendar-table"><caption data-calendar-caption>{year}年{month}月 府内のイベント予定</caption><thead><tr>{''.join('<th scope="col">'+x+'</th>' for x in '日月火水木金土')}</tr></thead><tbody data-calendar-body>{''.join(rows)}</tbody></table><p class="calendar-legend">● 開催予定　× 中止　日付の印から詳細へ</p><p class="calendar-updated">情報確認：{data["last_checked"].replace("-",".")} ／ 毎週更新</p></div>
- <div class="local-event-list"><label class="calendar-list-scope" data-calendar-controls hidden>一覧の表示<select data-calendar-scope aria-label="予定一覧の表示範囲"><option value="all">これからの予定（全月）</option><option value="month">カレンダーの月のみ</option></select></label><p class="calendar-count" data-calendar-count role="status">{len(events)}件のイベント</p>{''.join(cards)}<p class="calendar-empty" data-calendar-empty hidden>選択した条件の掲載予定はありません。ほかの月・種別もご覧ください。</p></div></div>
- <noscript><p>JavaScriptが無効な場合は、上記カレンダーと日程順の一覧をご利用ください。</p></noscript>
+ <div class="local-event-list"><label class="calendar-list-scope" data-calendar-controls hidden>一覧の表示<select data-calendar-scope aria-label="予定一覧の表示範囲"><option value="upcoming">直近2件（当日を含む）</option><option value="all">これからの予定（全月）</option><option value="month">カレンダーの月のみ</option></select></label><p class="calendar-count" data-calendar-count role="status">直近の予定（当日を含む） {len(visible_ids)}件</p>{''.join(cards)}<p class="calendar-empty" data-calendar-empty hidden>選択した条件の掲載予定はありません。ほかの月・種別もご覧ください。</p></div></div>
+ <noscript><style>[data-osaka-calendar] [data-calendar-item][hidden]{{display:block}}</style><p>JavaScriptが無効な場合は、上記カレンダーと日程順の全件一覧をご利用ください。</p></noscript>
  <script type="application/json" data-calendar-data>{payload}</script></section>'''
 def main():
  p=argparse.ArgumentParser();p.add_argument("--check",action="store_true");a=p.parse_args()

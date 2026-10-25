@@ -97,7 +97,7 @@ def render(data,policy,prefix):
  <nav class="calendar-month-tabs" aria-label="月別のイベント" data-calendar-tabs data-calendar-controls hidden></nav>
  <div class="calendar-layout"><div class="calendar-table-wrap"><table class="calendar-table"><caption data-calendar-caption>{year}年{month}月 府内のイベント予定</caption><thead><tr>{''.join('<th scope="col">'+x+'</th>' for x in '日月火水木金土')}</tr></thead><tbody data-calendar-body>{''.join(rows)}</tbody></table><p class="calendar-legend">● 開催予定　× 中止　日付の印から詳細へ</p><p class="calendar-updated">情報確認：{data["last_checked"].replace("-",".")} ／ 毎週更新</p></div>
  <div class="local-event-list"><label class="calendar-list-scope" data-calendar-controls hidden>一覧の表示<select data-calendar-scope aria-label="予定一覧の表示範囲"><option value="upcoming">直近2件（当日を含む）</option><option value="all">これからの予定（全月）</option><option value="month">カレンダーの月のみ</option></select></label><p class="calendar-count" data-calendar-count role="status">直近の予定（当日を含む） {len(visible_ids)}件</p>{''.join(cards)}<p class="calendar-empty" data-calendar-empty hidden>選択した条件の掲載予定はありません。ほかの月・種別もご覧ください。</p></div></div>
- <noscript><style>[data-osaka-calendar] [data-calendar-item][hidden]{{display:block}}</style><p>JavaScriptが無効な場合は、上記カレンダーと日程順の全件一覧をご利用ください。</p></noscript>
+ <noscript><style>[data-osaka-calendar] [data-calendar-item][hidden]{{display:block!important}}</style><p>JavaScriptが無効な場合は、上記カレンダーと日程順の全件一覧をご利用ください。</p></noscript>
  <script type="application/json" data-calendar-data>{payload}</script></section>'''
 def main():
  p=argparse.ArgumentParser();p.add_argument("--check",action="store_true");a=p.parse_args()

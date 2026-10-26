@@ -4,7 +4,7 @@ ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location("events",ROOT/"scripts/render-events.py");mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
 class EventPolicyTests(unittest.TestCase):
  def setUp(self):
-  self.data=json.loads((ROOT/"content/osaka-events.json").read_text());self.policy=json.loads((ROOT/"content/event-policy.json").read_text())
+  self.data=json.loads((ROOT/"tests/fixtures/osaka-events-20261024.json").read_text());self.policy=json.loads((ROOT/"content/event-policy.json").read_text())
  def rejects(self,mutate):
   mutate(self.data["events"][0])
   with self.assertRaises(ValueError):mod.validate(self.data,self.policy)
@@ -16,6 +16,8 @@ class EventPolicyTests(unittest.TestCase):
  def test_external_seminar_cannot_use_jesu_exception(self):
   self.rejects(lambda e:e.update(activity_type="seminar"))
  def test_verified_events(self):mod.validate(self.data,self.policy)
+ def test_current_calendar_validates(self):
+  mod.validate(json.loads((ROOT/"content/osaka-events.json").read_text()),self.policy)
  def test_reject_outside_osaka(self):self.rejects(lambda e:e.update(prefecture="兵庫県"))
  def test_reject_online_only(self):self.rejects(lambda e:e.update(format="online"))
  def test_reject_nonofficial_and_host_spoof(self):self.rejects(lambda e:e.update(official_url="https://redee.co.jp.example.com/event"))
@@ -66,6 +68,19 @@ class EventPolicyTests(unittest.TestCase):
   after=mod.render(self.data,self.policy,"home-",today="2026-10-27")
   self.assertEqual(re.findall(r'<article[^>]*data-calendar-item="([^"]+)"(?! hidden)>',after),[])
   self.assertIn('data-calendar-empty>',after)
+ def test_refreshed_calendar_keeps_today_and_drops_ended_cards(self):
+  self.data["last_checked"]="2026-10-26"
+  count=len(self.data["events"])
+  text=mod.render(self.data,self.policy,"home-",today="2026-10-26")
+  visible=re.findall(r'<article[^>]*data-calendar-item="([^"]+)"(?! hidden)>',text)
+  self.assertEqual(visible,["jesu-seminar-vol2-2026"])
+  self.assertNotIn('data-calendar-item="spaworld-halloween-digital-2026"',text)
+  self.assertEqual(len(self.data["events"]),count)
+ def test_expired_calendar_renders_empty_without_padding(self):
+  self.data["last_checked"]="2028-01-01"
+  text=mod.render(self.data,self.policy,"home-",today="2028-01-01")
+  self.assertNotIn('data-calendar-item="',text)
+  self.assertIn("data-calendar-empty>",text)
  def test_jesu_involvement_matches_existing_editorial_scope(self):
   spec=importlib.util.spec_from_file_location("sns",ROOT/"scripts/queue-calendar-sns.py")
   sns=importlib.util.module_from_spec(spec);spec.loader.exec_module(sns)

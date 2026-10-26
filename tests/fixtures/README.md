@@ -1,0 +1,1 @@
+Calendar unit tests use the frozen, public event dataset in osaka-events-20261024.json. This is test input, not a fresh official-source receipt or publication candidate. Date-bound rendering expectations must use this fixture and an explicit today value. The separate current-calendar test validates content/osaka-events.json on each run.

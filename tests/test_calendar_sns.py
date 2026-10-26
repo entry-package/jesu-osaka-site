@@ -6,7 +6,7 @@ class CalendarSns(unittest.TestCase):
     def setUp(self):
         self.now=dt.datetime.fromisoformat("2026-10-21T14:00:00+09:00")
         self.html=m.START+"published"+m.END
-        self.data={"events":[{"id":"a","name":"Official event","dates":["2026-10-24"],"status":"scheduled","venue":"Osaka","official_url":"https://example.org/event","checked_at":"2026-10-20"}]}
+        self.data={"events":[{"id":"a","name":"Official event","category":"jesu","organizer":"JeSU大阪","dates":["2026-10-24"],"status":"scheduled","venue":"Osaka","official_url":"https://example.org/event","checked_at":"2026-10-20"}]}
     def make(self): return m.source(self.data,self.html,self.html,self.now)
     def test_only_published_calendar(self):
         with self.assertRaises(ValueError): m.source(self.data,self.html,self.html.replace("published","old"),self.now)
@@ -22,6 +22,14 @@ class CalendarSns(unittest.TestCase):
         self.assertEqual(s["receipt"]["kind"],"published_calendar_readback")
     def test_finished_and_cancelled_not_promoted(self):
         self.data["events"][0]["status"]="cancelled";self.assertEqual(len(self.make()["facts"]),1)
+    def test_package_involvement_alone_is_not_promoted(self):
+        self.data["events"][0].update(category="corporate",organizer="株式会社PACkage")
+        s=self.make()
+        self.assertEqual([fact["id"] for fact in s["facts"]],["calendar"])
+        self.assertEqual(s["receipt"]["event_verification_dates"],{})
+    def test_jesu_category_without_involvement_is_not_promoted(self):
+        self.data["events"][0]["organizer"]="External organizer"
+        self.assertEqual([fact["id"] for fact in self.make()["facts"]],["calendar"])
     def test_duplicate_markers_rejected(self):
         with self.assertRaises(ValueError):m.calendar_block(self.html+self.html)
 if __name__=="__main__":unittest.main()

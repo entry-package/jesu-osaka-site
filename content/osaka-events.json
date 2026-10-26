@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "policy_version": "1.2",
-  "last_checked": "2026-10-20",
+  "last_checked": "2026-10-26",
   "timezone": "Asia/Tokyo",
   "events": [
     {
@@ -24,7 +24,7 @@
       "official_url": "https://redee.co.jp/lalaport-esportscup5/",
       "source_url": "https://mitsui-shopping-park.com/lalaport/kadoma/event/3603851.html",
       "source_owner": "主催者 REDEE",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "government_supported_major",
@@ -53,7 +53,7 @@
       "official_url": "https://redee.co.jp/lalaport-esportscup5/",
       "source_url": "https://mitsui-shopping-park.com/lalaport/kadoma/event/3603851.html",
       "source_owner": "主催者 REDEE",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "government_supported_major",
@@ -75,19 +75,18 @@
       "dates": [
         "2026-11-28"
       ],
-      "start_time": "10:00",
-      "end_time": "18:00",
+      "start_time": "13:00",
       "fee": "無料（大会参加は事前申込）",
       "official_url": "https://redee.co.jp/lalaport-esportscup5/",
       "source_url": "https://mitsui-shopping-park.com/lalaport/kadoma/event/3603851.html",
       "source_owner": "主催者 REDEE",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "government_supported_major",
         "evidence_url": "https://www.pref.osaka.lg.jp/o070080/e-sports_hojokin.html"
       },
-      "summary": "高校生・大学生を対象にしたストリートファイター6の大会。",
+      "summary": "高校生・大学生を対象にしたストリートファイター6の大会。個人戦は13:00開始（受付12:00）、団体戦は14:45開始予定。",
       "activity_type": "competition"
     },
     {
@@ -103,19 +102,19 @@
       "dates": [
         "2026-11-29"
       ],
-      "start_time": "10:00",
-      "end_time": "18:00",
+      "start_time": "11:00",
+      "end_time": "18:50",
       "fee": "無料（出場条件は公式案内をご確認ください）",
       "official_url": "https://redee.co.jp/lalaport-esportscup5/",
       "source_url": "https://mitsui-shopping-park.com/lalaport/kadoma/event/3603851.html",
       "source_owner": "主催者 REDEE",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "government_supported_major",
         "evidence_url": "https://www.pref.osaka.lg.jp/o070080/e-sports_hojokin.html"
       },
-      "summary": "各予選を通過した参加者が集う決勝ラウンド・グランドファイナル。",
+      "summary": "Fall Guys決勝は11:00〜13:00、GT7決勝は13:30〜18:50（予定）。各予選を通過した参加者が集います。",
       "activity_type": "competition"
     },
     {
@@ -137,7 +136,7 @@
       "official_url": "https://www.konami.com/games/prospi_a/fanfesta/2026/osaka/",
       "source_url": "https://www.konami.com/games/prospi_a/fanfesta/2026/osaka/",
       "source_owner": "ゲームメーカー KONAMI",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "publisher_national_final",
@@ -165,7 +164,7 @@
       "official_url": "https://www.ubisoft.com/ja-jp/esports/rainbow-six/siege/news-updates/bgHjRmr9Bh5q6vjXkI2cd/blast-r6-osaka-major---",
       "source_url": "https://www.ubisoft.com/ja-jp/esports/rainbow-six/siege/competition/513",
       "source_owner": "ゲームメーカー Ubisoft / BLAST R6 Esports",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "publisher_international_major",
@@ -194,7 +193,7 @@
       "official_url": "https://monsterhunternow.com/mhn-carnival-2026-osaka",
       "source_url": "https://www.capcom.co.jp/ir/news/html/260901.html",
       "source_owner": "運営 Scopely Explore / 協力 CAPCOM",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "publisher_official_festival",
@@ -221,7 +220,7 @@
       "official_url": "https://initiald.sega.jp/inidac/event/saikyo4th/regional-preliminaries/area7/",
       "source_url": "https://initiald.sega.jp/inidac/event/saikyo4th/regional-preliminaries/",
       "source_owner": "ゲームメーカー SEGA",
-      "checked_at": "2026-10-20",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "publisher_official_qualifier",
@@ -245,7 +244,7 @@
       "prefecture": "大阪府",
       "format": "offline",
       "source_owner": "PACkageまたは関係イベント主催者",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "package_related",
@@ -277,7 +276,7 @@
       "prefecture": "大阪府",
       "format": "offline",
       "source_owner": "PACkageまたは関係イベント主催者",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "package_related",
@@ -309,7 +308,7 @@
       "prefecture": "大阪府",
       "format": "offline",
       "source_owner": "PACkageまたは関係イベント主催者",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "package_related",
@@ -342,7 +341,7 @@
       "prefecture": "大阪府",
       "format": "offline",
       "source_owner": "PACkageまたは関係イベント主催者",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "package_related",
@@ -375,7 +374,7 @@
       "prefecture": "大阪府",
       "format": "offline",
       "source_owner": "PACkageまたは関係イベント主催者",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "package_related",
@@ -410,7 +409,7 @@
       "official_url": "https://peatix.com/event/5230213",
       "source_url": "https://peatix.com/event/5230213",
       "source_owner": "JeSU大阪 公式申込ページ",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "jesu_official",
@@ -440,7 +439,7 @@
       "official_url": "https://www.spaworld.co.jp/event/spaworld-gokuraku-halloween2026/",
       "source_url": "https://www.spaworld.co.jp/event/spaworld-gokuraku-halloween2026/",
       "source_owner": "会場公式・PACkage公式X",
-      "checked_at": "2026-10-21",
+      "checked_at": "2026-10-26",
       "status": "scheduled",
       "importance": {
         "kind": "package_related",
@@ -453,6 +452,34 @@
       },
       "activity_type": "workshop",
       "summary": "ロブロックスのハロウィンワールドと、ぷよぷよプログラミングのオリジナルハロウィンアレンジを楽しめる体験会。"
+    },
+    {
+      "id": "joshin-kishiwada-20261123",
+      "name": "Joshin岸和田GP",
+      "organizer": "株式会社Joshin",
+      "organizer_label": "情報提供",
+      "category": "corporate",
+      "city": "岸和田市",
+      "venue": "ジョーシン岸和田店 1F",
+      "prefecture": "大阪府",
+      "format": "offline",
+      "dates": [
+        "2026-11-23"
+      ],
+      "start_time": "14:00",
+      "end_time": "",
+      "fee": "要確認",
+      "official_url": "https://www.oegg-osaka.com/calendar/202611/#event-joshin-kishiwada-20261123",
+      "source_url": "https://www.oegg-osaka.com/calendar/202611/#event-joshin-kishiwada-20261123",
+      "source_owner": "情報提供元の開催概要／OeGG公開掲載",
+      "checked_at": "2026-10-26",
+      "status": "scheduled",
+      "importance": {
+        "kind": "named_event_exception",
+        "evidence_url": "https://www.oegg-osaka.com/calendar/202611/#event-joshin-kishiwada-20261123"
+      },
+      "summary": "グランツーリスモ7の個人戦・団体戦・体験レースを実施予定。個人戦8名、団体戦8名、体験レース最大12名。",
+      "activity_type": "competition"
     }
   ]
 }

@@ -38,7 +38,8 @@
     "pngesports.com",
     "peatix.com",
     "x.com",
-    "spaworld.co.jp"
+    "spaworld.co.jp",
+    "www.oegg-osaka.com"
   ],
   "major_capacity_threshold": 300,
   "publication": "提示版の確認後に公開。毎週の自動処理は公式情報調査・検証・確認版保存まで。",
@@ -64,5 +65,17 @@
     "exhibition",
     "performance",
     "workshop"
-  ]
+  ],
+  "named_event_exceptions": {
+    "joshin-kishiwada-20261123": {
+      "dates": [
+        "2026-11-23"
+      ],
+      "venue": "ジョーシン岸和田店 1F",
+      "official_url": "https://www.oegg-osaka.com/calendar/202611/#event-joshin-kishiwada-20261123",
+      "category": "corporate",
+      "authorization": "2026-10-26 社長から当該イベントをJeSU大阪サイトへ追加する直接依頼",
+      "basis": "情報提供元から受領した開催概要とOeGGの公開掲載を照合"
+    }
+  }
 }

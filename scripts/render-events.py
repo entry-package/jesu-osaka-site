@@ -29,7 +29,11 @@ def validate(data,policy):
   if e.get("detail_anchor") and (e.get("category")!="jesu" or not re.fullmatch(r"[a-z0-9-]+",e["detail_anchor"])):errors.append("invalid own-event detail anchor")
   if e.get("activity_type") not in allowed_activities:errors.append("activity outside listing scope")
   if e.get("status") not in ("scheduled","cancelled","postponed"):errors.append("unknown status")
-  if e.get("importance",{}).get("kind") not in policy["importance_kinds"]:errors.append("missing major-event basis")
+  named=e.get("importance",{}).get("kind")=="named_event_exception"
+  if named:
+   exception=policy.get("named_event_exceptions",{}).get(e["id"],{})
+   if not exception.get("authorization") or any(e.get(k)!=exception.get(k) for k in ("dates","venue","official_url","category")):errors.append("event outside named exception")
+  elif e.get("importance",{}).get("kind") not in policy["importance_kinds"]:errors.append("missing major-event basis")
   for key in ("official_url","source_url"):
    u=urlsplit(e.get(key,""));host=u.hostname or ""
    if u.scheme!="https" or u.username or u.password or not any(host==h or host.endswith("."+h) for h in policy["source_hosts"]):errors.append(e["id"]+": unverified official host "+key)
@@ -89,7 +93,7 @@ def render(data,policy,prefix,today=None):
   <div class="local-event-meta"><span class="tag neutral">{labels[e["category"]]}</span><span>{"要再確認" if stale else status}</span></div>
   <p class="local-event-date">{dates}<span>{times}</span></p><h3>{escape(e["name"])}</h3>
   <p>{escape(e["summary"])}</p><dl><div><dt>会場</dt><dd>{escape(e["venue"])}（{escape(e["city"])}）</dd></div>
-  <div><dt>主催</dt><dd>{escape(e["organizer"])}</dd></div><div><dt>参加</dt><dd>{escape(e["fee"])}</dd></div></dl>
+  <div><dt>{escape(e.get("organizer_label","主催"))}</dt><dd>{escape(e["organizer"])}</dd></div><div><dt>参加</dt><dd>{escape(e["fee"])}</dd></div></dl>
   <div class="local-event-footer"><a class="text-link" href="{escape(e["official_url"])}" target="_blank" rel="noopener">公式サイトで確認 ↗</a><small>情報確認 {e["checked_at"].replace("-",".")}</small></div></article>''')
  payload=json.dumps({"events":events},ensure_ascii=False).replace("</","<\\/")
  options=''.join(f'<option value="{k}">{v}</option>' for k,v in labels.items())

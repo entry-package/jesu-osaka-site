@@ -9,6 +9,10 @@
     corporate: "企業主催",
   };
   function statusLabel(event, today) {
+    if (event.show_completed_in_month && event.status === "scheduled") {
+      if (event.dates.at(-1) < today) return "開催終了";
+      if (event.dates.includes(today)) return "開催中";
+    }
     const label =
       event.status === "cancelled"
         ? "中止"
@@ -33,7 +37,7 @@
       )
       .flatMap((e) =>
         e.dates
-          .filter((d) => d.startsWith(month) && d >= today)
+          .filter((d) => d.startsWith(month) && (d >= today || (month && e.show_completed_in_month)))
           .map((d) => ({ date: d, event: e })),
       );
   }
@@ -166,7 +170,7 @@
                 text.textContent =
                   event.status === "cancelled"
                     ? "中止"
-                    : labels[event.category];
+                    : (event.calendar_label || labels[event.category]);
                 a.append(dot, text);
                 a.addEventListener("click", () => {
                   const target = document.getElementById(a.hash.slice(1));

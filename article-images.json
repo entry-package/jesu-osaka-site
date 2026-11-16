@@ -1,4 +1,22 @@
 {
   "origin": "https://www.jesu-osaka.jp",
-  "articles": []
+  "articles": [
+    {
+      "path": "/registration-start-20261117.html",
+      "title": "無料登録と公式コミュニティ（Discord）を始めました",
+      "image": "/assets/registration-start-20261117.png",
+      "alt": "JeSU大阪「無料登録をはじめました」の告知画像。個人・チームと企業・団体の登録フォームのQRコード",
+      "width": 1200,
+      "height": 675,
+      "sha256": "f6c119baf2192ddb5622e7657e89a5e8b9a37f2ebe1443044689b7d1cae0d18e",
+      "listings": [
+        "/",
+        "/news.html"
+      ],
+      "source": {
+        "kind": "designed",
+        "reference": "sha256:5efb856d9449920822c1f1729cdd949649790e73735150644b794b222d4a33db"
+      }
+    }
+  ]
 }

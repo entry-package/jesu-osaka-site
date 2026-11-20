@@ -2,6 +2,23 @@
   "origin": "https://www.jesu-osaka.jp",
   "articles": [
     {
+      "path": "/joshin-kishiwada-20261120.html",
+      "title": "ジョーシン岸和田店のeスポーツスペースに、JeSU大阪のロゴを掲出いただいています",
+      "image": "/assets/joshin-kishiwada-20261120.jpg",
+      "alt": "ジョーシン岸和田店1Fのeスポーツスペースの柱のサイン（JeSU OSAKAのロゴ）と、1F店内案内図のeスポーツスペース部分（Joshin esports・JeSU大阪・OeGGのロゴ）",
+      "width": 1200,
+      "height": 675,
+      "sha256": "c3a4d09fe7098b7837b732ab6e9ca1dcc0dbd277150115f59d781294258c0b33",
+      "listings": [
+        "/",
+        "/news.html"
+      ],
+      "source": {
+        "kind": "photo",
+        "reference": "Drive 1fimdSQj0mfBu23P1f-SWDwbDkP2hwXD8 + 1KHhtP_cvAJgCa3uklrIF0M7fp_f8zozv（社長撮影 2026-11-19 受領・2枚を元の比率のまま並べた）"
+      }
+    },
+    {
       "path": "/registration-start-20261117.html",
       "title": "無料登録と公式コミュニティ（Discord）を始めました",
       "image": "/assets/registration-start-20261117.png",

@@ -95,6 +95,8 @@ def scan(root, config):
         if file.is_symlink():
             raise ValueError('symlinked HTML is not permitted')
         route = route_for(file, root)
+        if route.startswith('/en/'):
+            continue  # verified against the Japanese pages by verify_english_mirrors()
         page = Document(file.read_text(encoding='utf-8'))
         docs[route] = page
         if route in excluded or any(route.startswith(x) for x in excluded_prefixes):
@@ -198,8 +200,61 @@ def freeze(root, config):
     return {'schema_version':1, 'config_sha256':digest(config),
             'articles':{route:{'content':digest({k:v for k,v in row.items() if k!='cards'}),'cards':row['cards']} for route,row in sorted(articles.items())}}
 
-def verify(root, config, baseline, manifest):
+def verify_english_mirrors(root, config):
+    """Only same-source translations may share the Japanese article cover checks."""
+    english = root / 'en'
+    if not english.is_dir():
+        return []
+    origin = config['origin'].rstrip('/')
     errors = []
+
+    def markup(path):
+        return Document(path.read_text(encoding='utf-8'))
+
+    def alternate(page, locale):
+        hits = [node.attrs.get('href', '') for node in page.root.nodes('link')
+                if node.attrs.get('rel') == 'alternate' and node.attrs.get('hreflang') == locale]
+        return hits[0] if len(hits) == 1 else ''
+
+    def assets(page, route):
+        return sorted((urljoin(origin + route, element.attrs.get('src', '')),
+                       tuple(urljoin(origin + route, p.split()[0])
+                             for p in element.attrs.get('srcset', '').split(',') if p.strip()))
+                      for subtree in page.root.nodes('main') for element in subtree.nodes('img'))
+
+    for path in sorted(english.rglob('*.html')):
+        route = route_for(path, root)
+        translated = markup(path)
+        if route == '/en/404.html' or any(node.attrs.get('http-equiv', '').lower() == 'refresh'
+                                           for node in translated.root.nodes('meta')):
+            continue
+        ja = canonical(alternate(translated, 'ja'), origin + route, origin)
+        if not ja or ja.startswith('/en/'):
+            errors.append(route + ': English page has no Japanese counterpart')
+            continue
+        counterpart = root / ja.lstrip('/') if ja.endswith('.html') else root / ja.lstrip('/') / 'index.html'
+        expected = '/en' + (ja.removesuffix('.html') + '/' if ja.endswith('.html') else ja)
+        if route != expected or not counterpart.is_file():
+            errors.append(route + ': English page does not match the Japanese route')
+            continue
+        japanese = markup(counterpart)
+        if canonical(alternate(japanese, 'en'), origin + ja, origin) != route:
+            errors.append(route + ': Japanese counterpart does not link back')
+        binary_meta = IMAGE_META - {'og:image:alt', 'twitter:image:alt'}
+        if any(japanese.meta.get(key, []) != translated.meta.get(key, []) for key in binary_meta):
+            errors.append(route + ': localized cover metadata differs from the approved original')
+        for key in {'og:image:alt', 'twitter:image:alt'}:
+            if any(value.strip() for value in japanese.meta.get(key, [])) and not any(
+                value.strip() for value in translated.meta.get(key, [])
+            ):
+                errors.append(route + ': localized cover alt text is missing')
+        if assets(japanese, ja) != assets(translated, route):
+            errors.append(route + ': localized body image references differ from the original')
+    return errors
+
+
+def verify(root, config, baseline, manifest):
+    errors = verify_english_mirrors(Path(root), config)
     if baseline.get('schema_version') != 1 or baseline.get('config_sha256') != digest(config):
         return {'ok':False, 'errors':['policy/baseline mismatch'], 'checked':[]}
     if manifest.get('origin') != config['origin']:

@@ -15,7 +15,7 @@
       ],
       "source": {
         "kind": "photo",
-        "reference": "Drive 1fimdSQj0mfBu23P1f-SWDwbDkP2hwXD8 + 1KHhtP_cvAJgCa3uklrIF0M7fp_f8zozv（社長撮影 2026-11-19 受領・2枚を元の比率のまま並べた）"
+        "reference": "sha256:2dd1ed35e2c6adfcc7646ddf3de4757853e153852a1d85804d448da47bb7a79c"
       }
     },
     {
@@ -32,7 +32,7 @@
       ],
       "source": {
         "kind": "designed",
-        "reference": "sha256:5efb856d9449920822c1f1729cdd949649790e73735150644b794b222d4a33db"
+        "reference": "sha256:a6bfcb7c73f1d4e2d998660ceaa80c4d2f3306ecba2cfd764130549116ca49a0"
       }
     }
   ]

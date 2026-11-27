@@ -2,6 +2,10 @@
   'use strict';
   var form = document.querySelector('.native-form');
   if (!form) return;
+  if (form.hasAttribute('data-preview-form')) {
+    form.addEventListener('submit', function (event) { event.preventDefault(); });
+    return;
+  }
   var button = form.querySelector('button[type="submit"]');
   var message = document.getElementById('contact-form-message');
   var requestId = document.getElementById('form-request-id');

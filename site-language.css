@@ -63,4 +63,10 @@
   .site-header:has(> .locale-switch) > .brand small { font-size: 8px; }
   .site-header:has(> .locale-switch) .mobile-menu summary { gap: 4px; font-size: 11px; }
   .site-header .header-inner .brand small { font-size: 9px; }
+  [data-site="jesu"] .site-header > .brand {
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  [data-site="jesu"] .site-header > .brand img { flex-shrink: 0; }
+  [data-site="jesu"] .site-header > .brand small { overflow-wrap: anywhere; }
 }

@@ -22,9 +22,9 @@
     if (Date.now() >= Date.parse(card.dataset.eventEnd)) {
       card.querySelector("[data-event-status]").textContent = "Event ended";
       card.querySelector("[data-event-link]").textContent =
-        "View event details on Peatix (Japanese) ↗";
+        "View the original event notice on Peatix (Japanese) ↗";
       const heading = document.querySelector("#upcoming h2");
-      if (heading) heading.textContent = "Listed events";
+      if (heading) heading.textContent = "JeSU Osaka event notices";
     }
   });
   // A review host must never send a real inquiry to the production receiver.
